@@ -7,7 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { TeacherDashComponent } from './teacher-dash/teacher-dash.component';
-
+import { TeacherServiceService } from './teacher-service.service';
 
 @NgModule({
   declarations: [
@@ -18,8 +18,8 @@ import { TeacherDashComponent } from './teacher-dash/teacher-dash.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    TeacherServiceService
+    AppRoutingModule
+
   ],
   providers: [TeacherServiceService],
   bootstrap: [AppComponent]

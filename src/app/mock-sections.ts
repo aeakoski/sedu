@@ -2,7 +2,7 @@ import { section } from './section'
 import { part } from './part'
 import { question } from './question'
 
-export const SECTIONS: section[] = [
+export const SECTIONS:any = [
   {
     name: "Luftrummsklasser",
     description:"asdasd",

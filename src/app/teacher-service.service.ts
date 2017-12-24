@@ -10,7 +10,7 @@ import { SECTIONS } from './mock-sections'
 export class TeacherServiceService {
 
   constructor() { }
-  getSections():Section[]{
+  getSections(){
     return SECTIONS;
   }
 }
