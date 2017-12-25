@@ -1,7 +1,27 @@
-<ul *ngFor="let selection of selections">
-  <li>{{selection.name}}</li>
+<p>
+  Content
+</p>
+<ul class="sections" *ngFor="let section of selections">
+  <li class="section">{{section.name}}
+    <ul *ngFor="let part of section.sectionParts">
+      <li>{{part.name}}</li>
+      <li>Delbeskrivning: {{part.description}}</li>
+      <li>{{part.videoURL}}</li>
+
+    </ul>
+  </li>
+  <li>Beskrivning: {{section.description}}</li>
+  <li>Nytt delmoment</li>
+</ul>
+<ul class="sections">
+  <li>Ny Sektion</li>
 </ul>
 
 <p>
-  teacher-dash works!
+  Students
 </p>
+<ul>
+  <li>John Doe</li>
+  <li>Milda Matilda</li>
+  <li>Foo bar</li>
+</ul>
