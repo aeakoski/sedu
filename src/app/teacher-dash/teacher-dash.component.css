@@ -1,5 +1,6 @@
 ul{
   style:none;
+  display: inline-block;
 }
 .sections{
   display:inline-block;
@@ -9,6 +10,5 @@ ul{
 
 .new-form input{
   display: block;
-  width: 100%;
   text-align: left;
 }

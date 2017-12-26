@@ -1,13 +1,12 @@
 <p>
   Content
 </p>
-<ul class="sections" *ngFor="let section of selections">
+<ul class="sections" *ngFor="let section of Teacher.section">
   <li class="section">{{section.name}}
     <ul *ngFor="let part of section.sectionParts">
       <li>{{part.name}}</li>
       <li>Delbeskrivning: {{part.description}}</li>
       <li>{{part.videoURL}}</li>
-
     </ul>
   </li>
   <li>Beskrivning: {{section.description}}</li>
@@ -19,7 +18,7 @@
       <input name="videourl" type="text" placeholder="Video">
       <input type="submit" value="Skapa nytt">
     </form>
-</li>
+  </li>
 </ul>
 <ul class="sections">
   <li>

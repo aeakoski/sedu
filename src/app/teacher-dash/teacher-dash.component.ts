@@ -13,7 +13,7 @@ import { TeacherServiceService } from '../teacher-service.service'
 export class TeacherDashComponent implements OnInit {
 
 
-  public selections:any;
+  public sections:any;
   /*public sectionForm = this.fb.group({
     name: [""],
     description: [""]
@@ -25,7 +25,11 @@ export class TeacherDashComponent implements OnInit {
   });*/
   constructor(private Teacher:TeacherServiceService){//, private fb: FormBuilder) {
     console.log(Teacher.getSections())
-    this.selections = Teacher.getSections();
+    //this.sections = Teacher.section;
+    //Teacher.section.subscribe(sections => {
+      //this.sections = sections;
+    //});
+
   }
 
   createNewSection(values){

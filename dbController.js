@@ -17,10 +17,14 @@ const client = new Client({
 client.connect()
 
 
-exports.section = function(req, res) {
+exports.section = function(req, response) {
   console.log(req.body);
+  client.query("SELECT * FROM section;", (err, res) => {
+    console.log(err, res)
+    response.send(res.rows)
+  });
   //req.params.sectionid
-  res.send(200);
+
 };
 
 exports.newSection = function(req, res) {
@@ -41,6 +45,10 @@ exports.part = function(req, res) {
 
 exports.newPart = function(req, res) {
   console.log(req.body);
+  client.query("INSERT INTO Part (name, description, videourl)\
+                VALUES ('"+req.body.name+"','"+req.body.description+"','"+req.body.videourl+"','"+req.body.sectionid+"');", (err, res) => {
+    console.log(err, res)
+  });
   //req.params.sectionid
   res.send(200);
 };

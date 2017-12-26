@@ -10,9 +10,22 @@ import { SECTIONS } from './mock-sections'
 
 @Injectable()
 export class TeacherServiceService {
+  private website_api = "http://localhost:4444/api/";
+  public section: any;
 
   constructor(private http: Http) { }
+
   getSections(){
+    const req = this.http.get(this.website_api + "section");
+    req.subscribe(
+      (res)=>{
+        console.log(res.json());
+        this.section = res.json();
+        
+      }
+    );
+
+
     return SECTIONS;
   }
 

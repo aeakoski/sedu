@@ -28,17 +28,17 @@ app
     .use(express.static(html))
     //.use('/admin', express.static(html));
 
-    /*app.use(function(req, res, next) {
+    app.use(function(req, res, next) {
       res.header("Access-Control-Allow-Origin", "*");
       res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
       next();
     });
-*/
+
 
     var routes = require('./server-routes'); //importing route
     routes(app);
 
-    
+
 /*
   //Dis dont work, i do no wy :( All req gets catched by dis!
 
