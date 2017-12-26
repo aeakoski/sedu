@@ -25,6 +25,10 @@ exports.section = function(req, res) {
 
 exports.newSection = function(req, res) {
   console.log(req.body);
+  client.query("INSERT INTO Section (name, description)\
+                VALUES ('"+req.body.name+"','"+req.body.description+"');", (err, res) => {
+    console.log(err, res)
+  });
   //req.params.sectionid
   res.send(200);
 };
@@ -59,7 +63,7 @@ exports.login = function(req, res) {
 
   client.query("SELECT * FROM Student WHERE username = 'jdoe' AND password = '12345'", (err, res) => {
     console.log(err, res)
-    
+
   });
   res.send(200);
 };

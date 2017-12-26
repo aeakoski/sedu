@@ -11,10 +11,24 @@
     </ul>
   </li>
   <li>Beskrivning: {{section.description}}</li>
-  <li>Nytt delmoment</li>
+  <li>
+    <!--<button class="new-form" type="button" name="button">Nytt</button>-->
+    <form class="new-form" #form=ngForm (ngSubmit)="createNewPart(form.value)">
+      <input name="name" type="text" placeholder="Nytt delmoment">
+      <input name="description" type="text" placeholder="Beskrivning">
+      <input name="videourl" type="text" placeholder="Video">
+      <input type="submit" value="Skapa nytt">
+    </form>
+</li>
 </ul>
 <ul class="sections">
-  <li>Ny Sektion</li>
+  <li>
+    <form class="new-form" #form=ngForm (ngSubmit)="createNewSection(form.value)">
+      <input name="name" type="text" placeholder="Ny Sektion" ngModel>
+      <input name="description" type="text" placeholder="Beskrivning" ngModel>
+      <input type="submit" value="Skapa nytt">
+    </form>
+  </li>
 </ul>
 
 <p>

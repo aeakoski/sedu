@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TeacherServiceService } from '../teacher-service.service'
+//import { FormBuilder, Validators } from '@angular/forms';
 
 
 @Component({
@@ -11,12 +12,30 @@ import { TeacherServiceService } from '../teacher-service.service'
 })
 export class TeacherDashComponent implements OnInit {
 
-//importera sections här nuuuuuuu!
-  selections:any;
-  constructor(private Teacher:TeacherServiceService) {
+
+  public selections:any;
+  /*public sectionForm = this.fb.group({
+    name: [""],
+    description: [""]
+  });
+  public partForm = this.fb.group({
+    name: [""],
+    description: [""],
+    videourl: [""]
+  });*/
+  constructor(private Teacher:TeacherServiceService){//, private fb: FormBuilder) {
     console.log(Teacher.getSections())
     this.selections = Teacher.getSections();
   }
+
+  createNewSection(values){
+    console.log(values);
+    this.Teacher.createNewSection(values);
+  };
+  createNewPart(values){
+    console.log(values);
+    this.Teacher.createNewPart(values);
+  };
 
   ngOnInit() {
   }

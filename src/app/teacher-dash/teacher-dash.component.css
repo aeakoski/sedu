@@ -4,5 +4,11 @@ ul{
 .sections{
   display:inline-block;
   vertical-align:top;
-  
+
+}
+
+.new-form input{
+  display: block;
+  width: 100%;
+  text-align: left;
 }
