@@ -59,4 +59,17 @@ VALUES('Milda Matilda', 'missmm', '12345');
 INSERT INTO Student (name, username, password)
 VALUES('John Doe', 'jdoe', '12345');
 
--- SELECT * FROM Student WHERE username = 'jdoe' AND password = '12345'
+/*
+SELECT * FROM Student WHERE username = 'jdoe' AND password = '12345'
+
+SELECT s.name, s.description, s.section_id, t.part_count
+FROM section AS s
+LEFT JOIN
+	(
+	SELECT COUNT(section_id) AS part_count, section_id
+	FROM part
+	GROUP BY section_id
+	) AS t
+ON s.section_id = t.section_id
+
+*/

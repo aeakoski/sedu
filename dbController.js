@@ -19,7 +19,15 @@ client.connect()
 
 exports.section = function(req, response) {
   console.log(req.body);
-  client.query("SELECT * FROM section;", (err, res) => {
+  client.query("SELECT s.name, s.description, s.section_id, t.part_count \
+                FROM section AS s\
+                LEFT JOIN\
+                	(\
+                	SELECT COUNT(section_id) AS part_count, section_id \
+                	FROM part \
+                	GROUP BY section_id \
+                ) AS t \
+                ON s.section_id = t.section_id;", (err, res) => {
     console.log(err, res)
     response.send(res.rows)
   });

@@ -3,12 +3,21 @@ ul{
   display: inline-block;
 }
 .sections{
-  display:inline-block;
+  display:block;
   vertical-align:top;
-
 }
 
 .new-form input{
   display: block;
   text-align: left;
+  width: 100%;
+}
+.section{
+  min-height: 80vh;
+}
+#newHeader{
+  style:none;
+  font-size: 30px;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }

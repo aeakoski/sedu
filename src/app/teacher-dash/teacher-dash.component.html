@@ -1,40 +1,54 @@
-<p>
-  Content
-</p>
-<ul class="sections" *ngFor="let section of Teacher.section">
-  <li class="section">{{section.name}}
-    <ul *ngFor="let part of section.sectionParts">
-      <li>{{part.name}}</li>
-      <li>Delbeskrivning: {{part.description}}</li>
-      <li>{{part.videoURL}}</li>
-    </ul>
-  </li>
-  <li>Beskrivning: {{section.description}}</li>
-  <li>
-    <!--<button class="new-form" type="button" name="button">Nytt</button>-->
-    <form class="new-form" #form=ngForm (ngSubmit)="createNewPart(form.value)">
-      <input name="name" type="text" placeholder="Nytt delmoment">
-      <input name="description" type="text" placeholder="Beskrivning">
-      <input name="videourl" type="text" placeholder="Video">
-      <input type="submit" value="Skapa nytt">
-    </form>
-  </li>
-</ul>
-<ul class="sections">
-  <li>
-    <form class="new-form" #form=ngForm (ngSubmit)="createNewSection(form.value)">
-      <input name="name" type="text" placeholder="Ny Sektion" ngModel>
-      <input name="description" type="text" placeholder="Beskrivning" ngModel>
-      <input type="submit" value="Skapa nytt">
-    </form>
-  </li>
-</ul>
+<div class="overview" [hidden]="section_edit">
 
-<p>
-  Students
-</p>
-<ul>
-  <li>John Doe</li>
-  <li>Milda Matilda</li>
-  <li>Foo bar</li>
-</ul>
+  <h1 class="col col-md-12">
+    Inehåll
+  </h1>
+  <div class="sections" *ngFor="let section of Teacher.section">
+    <div class="section col col-md-3">
+      <h2 class="">{{section.name}}</h2>
+      <h3>Beskrivning</h3>
+      <p>{{section.description}}</p>
+        <!--<button class="new-form" type="button" name="button">Nytt</button>-->
+      <h3>Delmoment {{(section.part_count)?section.part_count:"0"}}st</h3>
+      <button type="button" name="button" (click)="section_edit=!section_edit; active_section = section.section_id">Redigera delmoment</button>
+    </div>
+  </div>
+  <div class="sections">
+    <div class="section col col-md-3">
+        <form class="new-form" #form=ngForm (ngSubmit)="createNewSection(form.value); form.reset();">
+          <input id="newHeader" name="name" type="text" placeholder="Ny Sektion" ngModel>
+          <h3>Beskrivning</h3>
+          <input name="description" type="text" placeholder="Beskrivning" ngModel>
+          <input type="submit" value="Skapa nytt">
+        </form>
+    </div>
+  </div>
+
+  <h1 class="col col-md-12">
+    Studenter
+  </h1>
+  <div class="col col-md-12">
+    <ul>
+      <li>John Doe</li>
+      <li>Milda Matilda</li>
+      <li>Foo bar</li>
+    </ul>
+  </div>
+
+</div>
+<div class="section_edit" [hidden]="!section_edit">
+  <h1>TEEHEEEEEE! {{active_section}}</h1>
+  <div>
+    <h3>TMA</h3>
+    <h4>Delbeskrivning: </h4>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+    <a href="#">Instructional video</a>
+  </div>
+  <form class="new-form" #form=ngForm (ngSubmit)="createNewPart(form.value)">
+    <input name="name" type="text" placeholder="Nytt delmoment">
+    <input name="description" type="text" placeholder="Beskrivning">
+    <input name="videourl" type="text" placeholder="Video">
+    <input type="submit" value="Skapa nytt">
+  </form>
+  <button type="button" name="button" (click)="section_edit=!section_edit">Spara</button>
+</div>

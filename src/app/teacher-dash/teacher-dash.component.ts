@@ -14,6 +14,8 @@ export class TeacherDashComponent implements OnInit {
 
 
   public sections:any;
+  private section_edit:boolean;
+  private active_section:-1;
   /*public sectionForm = this.fb.group({
     name: [""],
     description: [""]
@@ -24,17 +26,19 @@ export class TeacherDashComponent implements OnInit {
     videourl: [""]
   });*/
   constructor(private Teacher:TeacherServiceService){//, private fb: FormBuilder) {
-    console.log(Teacher.getSections())
+    this.section_edit = false;
+    //console.log(Teacher.getSections())
+    Teacher.getSections();
     //this.sections = Teacher.section;
     //Teacher.section.subscribe(sections => {
       //this.sections = sections;
     //});
-
   }
 
   createNewSection(values){
     console.log(values);
     this.Teacher.createNewSection(values);
+
   };
   createNewPart(values){
     console.log(values);
