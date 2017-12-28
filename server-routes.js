@@ -2,7 +2,7 @@
     const html = __dirname + '/dist';
 
     module.exports = function(app) {
-      var db = require('./dbController');
+      var db = require('./server-dbController');
       // todoList Routes
 
       app.route('/api/section/')
@@ -12,9 +12,8 @@
 
         If sectionid is not pressent then all sections will be sent
         */
-        .get(db.section);
+        .get(db.section)
 
-      app.route('/api/new/section/')
         /*
         Parameters
           name = string
@@ -23,8 +22,9 @@
         */
         .post(db.newSection);
 
-      app.route('/api/part')
+      app.route('/api/part/')
         /*
+
         Parameters
           sectionid = int
           partid = int

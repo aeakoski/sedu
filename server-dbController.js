@@ -45,10 +45,17 @@ exports.newSection = function(req, res) {
   res.send(200);
 };
 
-exports.part = function(req, res) {
-  console.log(req.body);
+exports.part = function(req, response) {
+  //console.log("Här börjar req body!!!!");
+  //console.log(req.query.sectionid);
+
+  client.query("SELECT * FROM part WHERE section_id = " + req.query.sectionid + ";", (err, res) => {
+    response.send(res.rows);
+    //console.log(err, res)
+  });
+
   //req.params.sectionid
-  res.send(200);
+  //res.send(200);
 };
 
 exports.newPart = function(req, res) {

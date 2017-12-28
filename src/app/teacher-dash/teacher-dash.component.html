@@ -1,7 +1,7 @@
 <div class="overview" [hidden]="section_edit">
 
   <h1 class="col col-md-12">
-    Inehåll
+    Inehåll - Luftrum och bestämmelser
   </h1>
   <div class="sections" *ngFor="let section of Teacher.section">
     <div class="section col col-md-3">
@@ -10,7 +10,7 @@
       <p>{{section.description}}</p>
         <!--<button class="new-form" type="button" name="button">Nytt</button>-->
       <h3>Delmoment {{(section.part_count)?section.part_count:"0"}}st</h3>
-      <button type="button" name="button" (click)="section_edit=!section_edit; active_section = section.section_id">Redigera delmoment</button>
+      <button type="button" name="button" (click)="section_edit=!section_edit; active_section = section.section_id; Teacher.getParts(section.section_id);">Redigera delmoment</button>
     </div>
   </div>
   <div class="sections">
@@ -37,12 +37,21 @@
 
 </div>
 <div class="section_edit" [hidden]="!section_edit">
-  <h1>TEEHEEEEEE! {{active_section}}</h1>
-  <div>
-    <h3>TMA</h3>
+  <h1>Luftrum och bestämmelser</h1>
+  <div *ngFor="let part of Teacher.part">
+    <h3>{{part.name}}</h3>
     <h4>Delbeskrivning: </h4>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-    <a href="#">Instructional video</a>
+    <p>{{part.description}}</p>
+
+    <iframe width="420" height="315"
+        [src]="makeLink(part.video)"
+        allowfullscreen="allowfullscreen"
+        mozallowfullscreen="mozallowfullscreen"
+        msallowfullscreen="msallowfullscreen"
+        oallowfullscreen="oallowfullscreen"
+        webkitallowfullscreen="webkitallowfullscreen">
+    </iframe>
+
   </div>
   <form class="new-form" #form=ngForm (ngSubmit)="createNewPart(form.value)">
     <input name="name" type="text" placeholder="Nytt delmoment">

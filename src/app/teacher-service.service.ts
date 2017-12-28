@@ -12,6 +12,7 @@ import { SECTIONS } from './mock-sections'
 export class TeacherServiceService {
   private website_api = "http://localhost:4444/api/";
   public section: any;
+  public part: any;
 
   constructor(private http: Http) { }
 
@@ -21,12 +22,20 @@ export class TeacherServiceService {
       (res)=>{
         console.log(res.json());
         this.section = res.json();
-        
       }
     );
 
+    //return SECTIONS;
+  }
 
-    return SECTIONS;
+  getParts(sectionid){
+    const req = this.http.get(this.website_api + "part?sectionid=" + sectionid);
+    req.subscribe(
+      (res)=>{
+        console.log(res.json());
+        this.part = res.json();
+      }
+    );
   }
 
   createNewPart(values){
@@ -39,7 +48,7 @@ export class TeacherServiceService {
     let options = new RequestOptions({ headers: headers });
 
     const postReq = this.http.post(
-      "http://localhost:4444/api/new/section",
+      "http://localhost:4444/api/section",
       values,
       options
     );
