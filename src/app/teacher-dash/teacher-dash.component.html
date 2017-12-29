@@ -10,8 +10,8 @@
   <hr>
   <div class="sections" [hidden]="section_edit">
     <div class="col col-md-4" *ngFor="let section of Teacher.section">
-      <div class="section">
-        <h2 class="header">{{section.name}}</h2>
+      <div class="card">
+        <h2 class="header dark-blue">{{section.name}}</h2>
         <h3>Beskrivning</h3>
         <p>{{section.description}}</p>
 
@@ -21,9 +21,9 @@
     </div>
 
     <div class="col col-md-4">
-      <div class="section">
+      <div class="card">
           <form class="new-form" #form=ngForm (ngSubmit)="createNewSection(form.value); form.reset();">
-            <input class="header" name="name" type="text" placeholder="Ny Sektion" [(ngModel)]="editName">
+            <input class="header dark-blue" name="name" type="text" placeholder="Ny Sektion" [(ngModel)]="editName">
             <h3>Beskrivning</h3>
             <textarea rows="10" class="" name="description" type="text" placeholder="Beskrivning" [(ngModel)]="editDesc"></textarea>
             <input class="edit" type="submit" value="Skapa sektion" >
@@ -41,25 +41,24 @@
 <div class="section_edit" [hidden]="!section_fullscreen">
   <h1>Luftrum och bestämmelser</h1>
   <hr>
-  <div [hidden]="section_edit">
-    <h2>{{active_section_name}}</h2>
+  <div class="card" style="min-height:250px;" [hidden]="section_edit">
+    <h2 class="header dark-blue">{{active_section_name}}</h2>
     <p>{{active_section_desc}}</p>
-    <i class="fa fa-pencil-square-o" (click)="section_edit = !section_edit" aria-hidden="true"></i>
+    <i class="fa fa-pencil-square-o fa-2x" (click)="section_edit = !section_edit" aria-hidden="true"> Redigera</i>
   </div>
-
+  <hr>
   <form class="new-form" [hidden]="!section_edit" #selection_edit_form=ngForm (ngSubmit)="Teacher.editSection(selection_edit_form.value); section_edit = !section_edit; hasUpdated=true;">
-    <input id="newHeader" name="name" type="text" [(ngModel)]="active_section_name">
+    <input class="header dark-blue" name="name" type="text" [(ngModel)]="active_section_name">
     <h3>Beskrivning</h3>
-    <input name="description" type="text" [(ngModel)]="active_section_desc">
+    <textarea name="description" type="text" rows="10" [(ngModel)]="active_section_desc"></textarea>
     <input name="section_id" type="hidden" [(ngModel)]="active_section_id">
-    <input name="video" type="text" [(ngModel)]="active_section_video_url">
-    <input type="submit" value="Redigera section">
-    <input type="button" name="back" value="Tillbaka" (click)="section_edit = !section_edit;">
+    <input type="submit" class="edit" value="Redigera section">
+    <input type="button" class="edit" value="Tillbaka" name="back" (click)="section_edit = !section_edit;">
   </form>
 
-  <div *ngFor="let part of Teacher.part">
+  <div class="card" *ngFor="let part of Teacher.part">
     <div [hidden]="part.part_edit">
-      <h3>{{part.name}}</h3>
+      <h3 class="header light-blue">{{part.name}}</h3>
       <h4>Delbeskrivning: </h4>
       <p>{{part.description}}</p>
       <iframe width="420" height="315"
@@ -70,28 +69,31 @@
           oallowfullscreen="oallowfullscreen"
           webkitallowfullscreen="webkitallowfullscreen">
       </iframe>
-      <i class="fa fa-pencil-square-o" (click)="part.part_edit = !part.part_edit; compose_video_url(part.video);" aria-hidden="true"></i>
+      <i class="fa fa-pencil-square-o fa-2x" (click)="part.part_edit = !part.part_edit; compose_video_url(part.video);" aria-hidden="true">Redigera del</i>
     </div>
 
     <div class="editPart" [hidden]="!part.part_edit">
       <form class="new-form" #edit_part_form=ngForm (ngSubmit)="Teacher.editPart(edit_part_form.value)">
-        <input name="name" type="text" [(ngModel)]="part.name">
-        <input name="description" type="text" [(ngModel)]="part.description">
-        <input name="video" type="text" [(ngModel)]="full_video_url">
+        <input class="header light-blue" type="text" name="name" [(ngModel)]="part.name">
+        <h4>Beskrivning</h4>
+        <textarea rows="10" type="text" name="description" [(ngModel)]="part.description"></textarea>
+        <h4>Youtube video</h4>
+        <input class="" type="text" name="video" [(ngModel)]="full_video_url">
         <input type="hidden" name="part_id" [(ngModel)]="part.part_id">
         <input type="hidden" name="section_id" [(ngModel)]="part.section_id">
-        <input type="submit" value="Spara ändringar">
+        <hr>
+        <input class="edit" type="submit" value="Spara ändringar">
       </form>
     </div>
   </div>
 
   <form class="new-form" #new_part_form=ngForm (ngSubmit)="Teacher.createNewPart(new_part_form.value); hasUpdated=true;">
-    <input name="name" type="text" placeholder="Nytt delmoment" ngModel>
-    <input name="description" type="text" placeholder="Beskrivning" ngModel>
-    <input name="video" type="text" placeholder="Video-url" ngModel>
+    <input class="header light-blue" type="text" name="name" placeholder="Nytt delmoment" ngModel>
+    <textarea type="text" rows="10" name="description" placeholder="Beskrivning" ngModel></textarea>
+    <input type="text" name="video" placeholder="Video-url" ngModel>
     <input type="hidden" name="section_id" [(ngModel)]="active_section_id">
-    <input type="submit" value="Skapa nytt">
+    <input class="edit" type="submit" value="Skapa nytt">
   </form>
-
-  <button type="button" name="button" (click)="section_fullscreen=!section_fullscreen">Spara</button>
+  <hr>
+  <button class="edit" type="button" name="button" (click)="section_fullscreen=!section_fullscreen">Spara</button>
 </div>

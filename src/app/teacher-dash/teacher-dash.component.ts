@@ -17,15 +17,15 @@ import {DomSanitizer} from "@angular/platform-browser";
 
 export class TeacherDashComponent implements OnInit {
   public sections:any;
-  private section_fullscreen=false;
+  private section_fullscreen=false;//false;
   private section_edit=false;
   private hasUpdated = false;
   private full_video_url:string;
 
-  private active_section=-1;
-  private active_section_name = "";
-  private active_section_desc = "";
-  private active_section_id = "";
+  private active_section=1;//-1;
+  private active_section_name = "Luftrum på kartan";//"";
+  private active_section_desc = "Luften är inte fri. På kartan ser vi massor med färgranna rutor. Vad innebär dessa? Det kommer vi lära oss här!";//"";
+  private active_section_id = "1";//"";
   private editName:string;
 
   constructor(private Teacher:TeacherServiceService, private domSanitizer : DomSanitizer){//, private fb: FormBuilder) {
