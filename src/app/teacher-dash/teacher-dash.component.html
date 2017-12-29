@@ -83,6 +83,7 @@
         <input type="hidden" name="section_id" [(ngModel)]="part.section_id">
         <hr>
         <input class="edit" type="submit" value="Spara ändringar">
+        <button class="edit" type="button" name="button" (click)="part.part_edit = !part.part_edit;">Tillbaka</button>
       </form>
     </div>
   </div>
@@ -95,5 +96,5 @@
     <input class="edit" type="submit" value="Skapa nytt">
   </form>
   <hr>
-  <button class="edit" type="button" name="button" (click)="section_fullscreen=!section_fullscreen">Spara</button>
+  <button class="edit" type="button" name="button" (click)="section_fullscreen=!section_fullscreen">Tillbaka</button>
 </div>
