@@ -9,7 +9,6 @@
         /*
         Parameters
           sectionid = int
-
         If sectionid is not pressent then all sections will be sent
         */
         .get(db.section)
@@ -22,28 +21,41 @@
         */
         .post(db.newSection)
 
-        .put(db.editSection);
-
-      app.route('/api/part/')
-        /*
-
-        Parameters
-          sectionid = int
-          partid = int
-
-        If partid is not pressent then all parts in the current section will be sent
-        */
-        .get(db.part)
-        .put(db.editPart)
-        .post(db.newPart);
-
-      app.route('/api/new/part/')
         /*
         Parameters
           name = string
           description = string
-          videourl = string
-          //TODO Add questions
+          section_id = string
+          token = string
+        */
+        .put(db.editSection);
+
+      app.route('/api/part/')
+        /*
+        Parameters
+          section_id = int
+          part_id = int
+
+        If partid is not pressent then all parts in the current section will be sent
+        */
+        .get(db.part)
+
+        /*
+        Parameters
+          section_id = int
+          part_id = int
+          name
+          description
+          video id from youtube
+        */
+        .put(db.editPart)
+
+        /*
+        Parameters
+          section_id = int
+          name
+          description
+          video id from youtube
         */
         .post(db.newPart);
 
