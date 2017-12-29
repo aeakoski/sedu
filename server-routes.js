@@ -20,7 +20,9 @@
           description = string
           token = string
         */
-        .post(db.newSection);
+        .post(db.newSection)
+
+        .put(db.editSection);
 
       app.route('/api/part/')
         /*

@@ -17,11 +17,17 @@ import {DomSanitizer} from "@angular/platform-browser";
 
 export class TeacherDashComponent implements OnInit {
   public sections:any;
-  private section_edit:boolean;
-  private active_section:-1;
+  private section_fullscreen=false;
+  private section_edit=false;
+
+  private active_section=-1;
+  private active_section_name = "";
+  private active_section_desc = "";
+  private active_section_id = "";
+  private editName:string;
 
   constructor(private Teacher:TeacherServiceService, private domSanitizer : DomSanitizer){//, private fb: FormBuilder) {
-    this.section_edit = false;
+
     //console.log(Teacher.getSections())
     Teacher.getSections();
     //this.sections = Teacher.section;
@@ -32,6 +38,14 @@ export class TeacherDashComponent implements OnInit {
 
   makeLink(id){
     return this.domSanitizer.bypassSecurityTrustResourceUrl("http://www.youtube.com/embed/" + id);
+  }
+
+  setActiveSection(section){
+    this.active_section_name = section.name;
+    this.active_section_desc = section.description;
+    this.active_section_id = section.section_id;
+    this.section_fullscreen = true;
+
   }
 
   createNewSection(values){

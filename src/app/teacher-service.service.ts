@@ -24,8 +24,20 @@ export class TeacherServiceService {
         this.section = res.json();
       }
     );
+  }
 
-    //return SECTIONS;
+  editSection(section){
+    console.log(section);
+    let headers = new Headers();
+    headers.append('content-type', 'application/json');
+    let options = new RequestOptions({ headers: headers });
+
+    const postReq = this.http.put(
+      "http://localhost:4444/api/section",
+      section,
+      options
+    );
+    postReq.subscribe( (res3)=>{ } );
   }
 
   getParts(sectionid){
@@ -53,6 +65,6 @@ export class TeacherServiceService {
       options
     );
     postReq.subscribe( (res3)=>{ } );
+  }
 
-  };
-};
+}

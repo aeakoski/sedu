@@ -1,48 +1,55 @@
-<div class="overview" [hidden]="section_edit">
 
+<!--MULTIPLE-VIEW-->
+<div class="overview" [hidden]="section_fullscreen">
   <h1 class="col col-md-12">
     Inehåll - Luftrum och bestämmelser
   </h1>
-  <div class="sections" *ngFor="let section of Teacher.section">
+  <div class="sections" [hidden]="section_edit" *ngFor="let section of Teacher.section">
     <div class="section col col-md-3">
       <h2 class="">{{section.name}}</h2>
       <h3>Beskrivning</h3>
       <p>{{section.description}}</p>
-        <!--<button class="new-form" type="button" name="button">Nytt</button>-->
+
       <h3>Delmoment {{(section.part_count)?section.part_count:"0"}}st</h3>
-      <button type="button" name="button" (click)="section_edit=!section_edit; active_section = section.section_id; Teacher.getParts(section.section_id);">Redigera delmoment</button>
+      <button type="button" name="button" (click)="Teacher.getParts(section.section_id); setActiveSection(section)">Redigera delmoment</button>
     </div>
   </div>
   <div class="sections">
     <div class="section col col-md-3">
         <form class="new-form" #form=ngForm (ngSubmit)="createNewSection(form.value); form.reset();">
-          <input id="newHeader" name="name" type="text" placeholder="Ny Sektion" ngModel>
+          <input id="newHeader" name="name" type="text" placeholder="Ny Sektion" [(ngModel)]="editName">
           <h3>Beskrivning</h3>
-          <input name="description" type="text" placeholder="Beskrivning" ngModel>
-          <input type="submit" value="Skapa nytt">
+          <input name="description" type="text" placeholder="Beskrivning" [(ngModel)]="editDesc">
+          <input type="submit" value="Redigera">
         </form>
     </div>
   </div>
+</div>
 
-  <h1 class="col col-md-12">
-    Studenter
-  </h1>
-  <div class="col col-md-12">
-    <ul>
-      <li>John Doe</li>
-      <li>Milda Matilda</li>
-      <li>Foo bar</li>
-    </ul>
+
+<!--SINGLE-VIEW-->
+
+
+<div class="section_edit" [hidden]="!section_fullscreen">
+  <h1>Luftrum och bestämmelser</h1>
+  <div [hidden]="section_edit">
+    <h2>{{active_section_name}}</h2>
+    <p>{{active_section_desc}}</p>
+    <i class="fa fa-pencil-square-o" (click)="section_edit = !section_edit" aria-hidden="true"></i>
   </div>
 
-</div>
-<div class="section_edit" [hidden]="!section_edit">
-  <h1>Luftrum och bestämmelser</h1>
+  <form class="new-form" [hidden]="!section_edit" #selection_edit_form=ngForm (ngSubmit)="Teacher.editSection(selection_edit_form.value); section_edit = !section_edit;">
+    <input id="newHeader" name="name" type="text" [(ngModel)]="active_section_name">
+    <h3>Beskrivning</h3>
+    <input name="description" type="text" [(ngModel)]="active_section_desc">
+    <input name="section_id" type="hidden" [(ngModel)]="active_section_id">
+    <input type="submit" value="Redigera section">
+  </form>
+
   <div *ngFor="let part of Teacher.part">
     <h3>{{part.name}}</h3>
     <h4>Delbeskrivning: </h4>
     <p>{{part.description}}</p>
-
     <iframe width="420" height="315"
         [src]="makeLink(part.video)"
         allowfullscreen="allowfullscreen"
@@ -51,13 +58,14 @@
         oallowfullscreen="oallowfullscreen"
         webkitallowfullscreen="webkitallowfullscreen">
     </iframe>
-
   </div>
+
   <form class="new-form" #form=ngForm (ngSubmit)="createNewPart(form.value)">
-    <input name="name" type="text" placeholder="Nytt delmoment">
+    <input name="name" type="text" placeholder="Nytt delmoment" [value]="editName">
     <input name="description" type="text" placeholder="Beskrivning">
     <input name="videourl" type="text" placeholder="Video">
     <input type="submit" value="Skapa nytt">
   </form>
-  <button type="button" name="button" (click)="section_edit=!section_edit">Spara</button>
+
+  <button type="button" name="button" (click)="section_fullscreen=!section_fullscreen">Spara</button>
 </div>

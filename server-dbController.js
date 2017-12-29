@@ -28,7 +28,7 @@ exports.section = function(req, response) {
                 	GROUP BY section_id \
                 ) AS t \
                 ON s.section_id = t.section_id;", (err, res) => {
-    console.log(err, res)
+    //console.log(err, res)
     response.send(res.rows)
   });
   //req.params.sectionid
@@ -39,30 +39,34 @@ exports.newSection = function(req, res) {
   console.log(req.body);
   client.query("INSERT INTO Section (name, description)\
                 VALUES ('"+req.body.name+"','"+req.body.description+"');", (err, res) => {
-    console.log(err, res)
+    //console.log(err, res)
+  });
+  //req.params.sectionid
+  res.send(200);
+};
+
+exports.editSection = function(req, res) {
+  console.log("editSection");
+  console.log(req.body);
+  client.query("UPDATE section\
+                SET name = '"+req.body.name+"', description = '"+req.body.description+"'\
+                WHERE section_id = "+req.body.section_id+";", (err, res) => {
   });
   //req.params.sectionid
   res.send(200);
 };
 
 exports.part = function(req, response) {
-  //console.log("Här börjar req body!!!!");
-  //console.log(req.query.sectionid);
-
   client.query("SELECT * FROM part WHERE section_id = " + req.query.sectionid + ";", (err, res) => {
     response.send(res.rows);
-    //console.log(err, res)
   });
-
-  //req.params.sectionid
-  //res.send(200);
 };
 
 exports.newPart = function(req, res) {
   console.log(req.body);
   client.query("INSERT INTO Part (name, description, videourl)\
                 VALUES ('"+req.body.name+"','"+req.body.description+"','"+req.body.videourl+"','"+req.body.sectionid+"');", (err, res) => {
-    console.log(err, res)
+    //console.log(err, res)
   });
   //req.params.sectionid
   res.send(200);
@@ -85,7 +89,7 @@ exports.login = function(req, res) {
   //req.params.sectionid
 
   client.query("SELECT * FROM Student WHERE username = 'jdoe' AND password = '12345'", (err, res) => {
-    console.log(err, res)
+    //console.log(err, res)
 
   });
   res.send(200);
