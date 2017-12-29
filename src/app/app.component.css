@@ -1,1 +1,48 @@
+*{
+  box-sizing: border-box;
+}
 
+h1{
+  margin: 0px;
+}
+
+.all{
+  height: auto;
+  min-height: 100vh;
+  width: auto;
+  min-width: 100vh;
+  background-color: #e3e3e3;
+}
+
+.bar{
+  font-size: 2em;
+  font-weight: 500;
+  padding-top: 1px;
+  padding-bottom: 10px;
+  color: white;
+  background-color: #89bdd3;
+  height: 70px;
+}
+
+.bar .container{
+  background-color: inherit;
+}
+
+.container{
+  background-color: #fefefe;
+}
+
+.item{
+  margin-top: 13px;
+  color: white;
+  vertical-align: middle;
+
+}
+
+.item-l{
+  float: left;
+}
+
+.item-r{
+  float: right;
+}
