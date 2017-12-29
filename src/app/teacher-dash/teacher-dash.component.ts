@@ -19,6 +19,7 @@ export class TeacherDashComponent implements OnInit {
   public sections:any;
   private section_fullscreen=false;
   private section_edit=false;
+  private hasUpdated = false;
 
   private active_section=-1;
   private active_section_name = "";
@@ -45,7 +46,6 @@ export class TeacherDashComponent implements OnInit {
     this.active_section_desc = section.description;
     this.active_section_id = section.section_id;
     this.section_fullscreen = true;
-
   }
 
   createNewSection(values){

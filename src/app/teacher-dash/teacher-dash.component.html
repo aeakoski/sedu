@@ -1,3 +1,6 @@
+<div class="alert alert-warning" [hidden]="!(hasUpdated && !section_fullscreen)">
+  <strong>OBS!</strong> Informationen på sidan kan ha ändrats. Updatera sidan för att ta del av ändringarna.
+</div>
 
 <!--MULTIPLE-VIEW-->
 <div class="overview" [hidden]="section_fullscreen">
@@ -38,7 +41,7 @@
     <i class="fa fa-pencil-square-o" (click)="section_edit = !section_edit" aria-hidden="true"></i>
   </div>
 
-  <form class="new-form" [hidden]="!section_edit" #selection_edit_form=ngForm (ngSubmit)="Teacher.editSection(selection_edit_form.value); section_edit = !section_edit;">
+  <form class="new-form" [hidden]="!section_edit" #selection_edit_form=ngForm (ngSubmit)="Teacher.editSection(selection_edit_form.value); section_edit = !section_edit; hasUpdated=true;">
     <input id="newHeader" name="name" type="text" [(ngModel)]="active_section_name">
     <h3>Beskrivning</h3>
     <input name="description" type="text" [(ngModel)]="active_section_desc">
