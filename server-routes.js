@@ -33,7 +33,9 @@
 
         If partid is not pressent then all parts in the current section will be sent
         */
-        .get(db.part);
+        .get(db.part)
+        .put(db.editPart)
+        .post(db.newPart);
 
       app.route('/api/new/part/')
         /*

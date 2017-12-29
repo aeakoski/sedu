@@ -20,6 +20,7 @@ export class TeacherDashComponent implements OnInit {
   private section_fullscreen=false;
   private section_edit=false;
   private hasUpdated = false;
+  private full_video_url:string;
 
   private active_section=-1;
   private active_section_name = "";
@@ -28,13 +29,7 @@ export class TeacherDashComponent implements OnInit {
   private editName:string;
 
   constructor(private Teacher:TeacherServiceService, private domSanitizer : DomSanitizer){//, private fb: FormBuilder) {
-
-    //console.log(Teacher.getSections())
     Teacher.getSections();
-    //this.sections = Teacher.section;
-    //Teacher.section.subscribe(sections => {
-      //this.sections = sections;
-    //});
   }
 
   makeLink(id){
@@ -46,6 +41,10 @@ export class TeacherDashComponent implements OnInit {
     this.active_section_desc = section.description;
     this.active_section_id = section.section_id;
     this.section_fullscreen = true;
+  }
+
+  compose_video_url(id){
+    this.full_video_url = "https://www.youtube.com/watch?v="+id;
   }
 
   createNewSection(values){

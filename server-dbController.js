@@ -18,6 +18,7 @@ client.connect()
 
 
 exports.section = function(req, response) {
+  console.log("GET SECTION");
   console.log(req.body);
   client.query("SELECT s.name, s.description, s.section_id, t.part_count \
                 FROM section AS s\
@@ -36,8 +37,9 @@ exports.section = function(req, response) {
 };
 
 exports.newSection = function(req, res) {
+  console.log("NEW Section");
   console.log(req.body);
-  client.query("INSERT INTO Section (name, description)\
+  client.query("INSERT INTO section (name, description)\
                 VALUES ('"+req.body.name+"','"+req.body.description+"');", (err, res) => {
     //console.log(err, res)
   });
@@ -45,16 +47,34 @@ exports.newSection = function(req, res) {
   res.send(200);
 };
 
-exports.editSection = function(req, res) {
-  console.log("editSection");
+exports.newPart = function(req, res) {
+  console.log("NEW part");
   console.log(req.body);
+  //TODO Sanitize video!!!
+  client.query("INSERT INTO part (name, description, video, section_id)\
+                VALUES ('"+req.body.name+"','"+req.body.description+"','"+req.body.video+"','"+req.body.section_id+"');", (err, res) => {
+  });
+  res.send(200);
+};
+
+exports.editSection = function(req, res) {
   client.query("UPDATE section\
                 SET name = '"+req.body.name+"', description = '"+req.body.description+"'\
                 WHERE section_id = "+req.body.section_id+";", (err, res) => {
   });
-  //req.params.sectionid
   res.send(200);
 };
+
+exports.editPart = function(req, res){
+  console.log("editPart");
+  console.log(req.body);
+  //TODO Sanitize video URL!!!!!!!!
+  client.query("UPDATE part\
+                SET name = '"+req.body.name+"', description = '"+req.body.description+"', video = '"+req.body.video+"'\
+                WHERE part_id = "+req.body.part_id+";", (err, res) => {
+  });
+  res.send(200);
+}
 
 exports.part = function(req, response) {
   client.query("SELECT * FROM part WHERE section_id = " + req.query.sectionid + ";", (err, res) => {
@@ -64,9 +84,9 @@ exports.part = function(req, response) {
 
 exports.newPart = function(req, res) {
   console.log(req.body);
-  client.query("INSERT INTO Part (name, description, videourl)\
-                VALUES ('"+req.body.name+"','"+req.body.description+"','"+req.body.videourl+"','"+req.body.sectionid+"');", (err, res) => {
-    //console.log(err, res)
+  client.query("INSERT INTO Part (name, description, video, section_id)\
+                VALUES ('"+req.body.name+"','"+req.body.description+"','"+req.body.video+"','"+req.body.section_id+"');", (err, res) => {
+    console.log(err, res)
   });
   //req.params.sectionid
   res.send(200);

@@ -31,10 +31,28 @@ export class TeacherServiceService {
     let headers = new Headers();
     headers.append('content-type', 'application/json');
     let options = new RequestOptions({ headers: headers });
-
     const postReq = this.http.put(
       "http://localhost:4444/api/section",
       section,
+      options
+    );
+    postReq.subscribe( (res3)=>{ } );
+  }
+
+  editPart(part){
+    console.log(part)
+    let headers = new Headers();
+    headers.append('content-type', 'application/json');
+    let options = new RequestOptions({ headers: headers });
+    let video_id = part.video.split("=")
+    if (video_id.length != 2){
+      //TODO Throw error
+      console.log("FUUUUUUU!");
+    }
+    part.video = video_id[1];
+    const postReq = this.http.put(
+      "http://localhost:4444/api/part",
+      part,
       options
     );
     postReq.subscribe( (res3)=>{ } );
@@ -50,10 +68,6 @@ export class TeacherServiceService {
     );
   }
 
-  createNewPart(values){
-    return 0;
-  }
-
   createNewSection(values){
     let headers = new Headers();
     headers.append('content-type', 'application/json');
@@ -62,6 +76,26 @@ export class TeacherServiceService {
     const postReq = this.http.post(
       "http://localhost:4444/api/section",
       values,
+      options
+    );
+    postReq.subscribe( (res3)=>{ } );
+  }
+
+  createNewPart(part){
+    let headers = new Headers();
+    headers.append('content-type', 'application/json');
+    let options = new RequestOptions({ headers: headers });
+    let video_id = part.video.split("=")
+    if (video_id.length != 2){
+      //TODO Throw error
+      console.log("FUUUUUUU!");
+    }
+    part.video = video_id[1];
+    console.log(part);
+    console.log("Sending post to api/part");
+    const postReq = this.http.post(
+      "http://localhost:4444/api/part",
+      part,
       options
     );
     postReq.subscribe( (res3)=>{ } );
