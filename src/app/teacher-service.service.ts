@@ -183,5 +183,17 @@ export class TeacherServiceService {
     postReq.subscribe( (res3)=>{ } );
   }
 
+  removePart(id){
+    let headers = new Headers();
+    headers.append('content-type', 'application/json');
+    let options = new RequestOptions({ headers: headers });
+    const postReq = this.http.delete(
+      "http://localhost:4444/api/part?id="+id,
+      options
+    );
+    postReq.subscribe( (res3)=>{
+      
+    } );
+  }
 
 }

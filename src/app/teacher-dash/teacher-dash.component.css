@@ -36,8 +36,19 @@ th{
 tr{
   width: 100%;
 }
+table{
+  margin-bottom: 30px;
+}
 h4{
   margin-top: 20px;
+}
+
+.inline{
+  display: inline-block;
+}
+
+.red{
+
 }
 
 .new-form input{
@@ -109,6 +120,8 @@ h4{
   height:70px;
   margin-bottom: 10px;
 }
+
+
 
 .question{
   text-align: right;

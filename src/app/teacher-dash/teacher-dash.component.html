@@ -78,7 +78,7 @@
         <tr *ngFor="let question of part.question">
           <td class="question">{{question.question}}</td>
           <td class="answer">{{question.answer}}</td>
-          <td><i class="fa fa-times red" (click)="Teacher.removeQuestion(question.question_id)" aria-hidden="true"></i></td>
+          <td><i class="fa fa-times red" (click)="Teacher.removeQuestion(question.question_id);" aria-hidden="true"></i></td>
         </tr>
       </table>
 
@@ -95,8 +95,13 @@
       </table>
 
       <hr>
-      <i class="fa fa-pencil-square-o fa-2x" (click)="part.part_edit = !part.part_edit; compose_video_url(part.video);" aria-hidden="true">Redigera del</i>
+      <div class="col col-12">
+        <button type="button" class="edit col col-12" name="button" (click)="part.part_edit = !part.part_edit; compose_video_url(part.video);"> Redigera del</button>
+        <button type="button" class="edit col col-12" name="button" (click)="Teacher.removePart(part.part_id);"> Ta bort del</button>
+      </div>
     </div>
+
+    <!-- Edit part -->
 
     <div class="editPart" [hidden]="!part.part_edit">
       <form class="new-form" #edit_part_form=ngForm (ngSubmit)="Teacher.editPart(edit_part_form.value)">
@@ -109,7 +114,6 @@
         <input type="hidden" name="section_id" [(ngModel)]="part.section_id">
 
         <input class="edit" type="submit" value="Spara ändringar">
-        <button class="edit" type="button" name="button" (click)="part.part_edit = !part.part_edit;">Tillbaka</button>
       </form>
       <hr>
 
@@ -121,7 +125,7 @@
         </tr>
         <!-- Övningsfrågor -->
         <tr *ngFor="let question of part.question">
-          <form class="new-form" #edit_question_form=ngForm (ngSubmit)="Teacher.editQuestion(false, question.question_id, edit_question_form.value); this.Teacher.getParts(active_section_id);">
+          <form class="new-form" #edit_question_form=ngForm (ngSubmit)="Teacher.editQuestion(false, question.question_id, edit_question_form.value); Teacher.getParts(active_section_id);">
             <td class="question"><input type="text" name="question" [ngModel]="question.question"></td>
             <td class="answer"><input type="text" name="answer" [ngModel]="question.answer"></td>
             <td class="question_submit"><input type="submit" name="s" value="Spara"></td>
@@ -161,7 +165,10 @@
         </tr>
       </table>
       <button class="edit" type="button" name="button" (click)="newExamFields.push(0);">Ännu en provfråga</button>
+      <button class="edit" type="button" name="button" (click)="part.part_edit = !part.part_edit;">Tillbaka</button>
+
     </div>
+
   </div>
 
   <form class="new-form" #new_part_form=ngForm (ngSubmit)="Teacher.createNewPart(new_part_form.value); hasUpdated=true;">

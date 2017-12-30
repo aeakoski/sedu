@@ -57,7 +57,16 @@
           description
           video id from youtube
         */
-        .post(db.newPart);
+        .post(db.newPart)
+
+        /*
+        URL Params
+        id = part_id
+
+        Example:
+        /api/part?id=1
+        */
+        .delete(db.removePart);
 
       app.route('/api/question')
         /*
@@ -76,6 +85,13 @@
         .get(db.question)
         .post(db.newQuestion)
         .put(db.editQuestion)
+        /*
+        URL Params
+        id = question_id
+
+        Example:
+        /api/question?id=1
+        */
         .delete(db.removeQuestion);
 
 
