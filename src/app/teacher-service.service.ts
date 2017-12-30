@@ -168,4 +168,20 @@ export class TeacherServiceService {
     postReq.subscribe( (res3)=>{ } );
   }
 
+
+  /* ---------------- Removes -----------------*/
+
+  removeQuestion(id){
+    console.log("removing " + id)
+    let headers = new Headers();
+    headers.append('content-type', 'application/json');
+    let options = new RequestOptions({ headers: headers });
+    const postReq = this.http.delete(
+      "http://localhost:4444/api/question?id="+id,
+      options
+    );
+    postReq.subscribe( (res3)=>{ } );
+  }
+
+
 }

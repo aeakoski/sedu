@@ -75,7 +75,8 @@
         */
         .get(db.question)
         .post(db.newQuestion)
-        .put(db.editQuestion);
+        .put(db.editQuestion)
+        .delete(db.removeQuestion);
 
 
       app.route('/api/result')

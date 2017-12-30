@@ -117,6 +117,19 @@ exports.editQuestion=function(req, res){
   res.send(200);
 }
 
+
+/* ------------ DELETES ---------------- */
+exports.removeQuestion = function(req, res){
+  console.log("DELETEING QUESTION");
+  console.log(req.query);
+  client.query("DELETE FROM question\
+                WHERE question_id = "+req.query.id+";", (err, res) => {
+                  if (err) {console.log(err);}
+  });
+  res.send(200);
+}
+
+
 /* ------------ QUESTIONS ---------------- */
 
 exports.saveResults = function(req, res) {
