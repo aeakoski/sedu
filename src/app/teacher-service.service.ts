@@ -112,7 +112,7 @@ export class TeacherServiceService {
     console.log(values);
     const postReq = this.http.put(
       "http://localhost:4444/api/question",
-      section,
+      values,
       options
     );
     postReq.subscribe( (res3)=>{ } );

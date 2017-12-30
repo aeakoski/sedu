@@ -108,7 +108,14 @@ exports.editPart = function(req, res){
   res.send(200);
 }
 
-exports.editQuestion=function(req, res){}
+exports.editQuestion=function(req, res){
+  client.query("UPDATE question\
+                SET question = '"+req.body.question+"', answer = '"+req.body.answer+"'\
+                WHERE question_id = "+req.body.question_id+";", (err, res) => {
+                  if (err) {console.log(err);}
+  });
+  res.send(200);
+}
 
 /* ------------ QUESTIONS ---------------- */
 
