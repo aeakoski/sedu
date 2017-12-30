@@ -103,6 +103,21 @@ export class TeacherServiceService {
     postReq.subscribe( (res3)=>{ } );
   }
 
+  editQuestion(isExam, id, values){
+    let headers = new Headers();
+    headers.append('content-type', 'application/json');
+    let options = new RequestOptions({ headers: headers });
+    values.isexam = isExam;
+    values.question_id = id;
+    console.log(values);
+    const postReq = this.http.put(
+      "http://localhost:4444/api/question",
+      section,
+      options
+    );
+    postReq.subscribe( (res3)=>{ } );
+  }
+
   /* ---------------- Creates -----------------*/
 
   createNewSection(values){
@@ -133,6 +148,21 @@ export class TeacherServiceService {
     const postReq = this.http.post(
       "http://localhost:4444/api/part",
       part,
+      options
+    );
+    postReq.subscribe( (res3)=>{ } );
+  }
+
+  newQuestion(isExam, part_id, values){
+    let headers = new Headers();
+    headers.append('content-type', 'application/json');
+    let options = new RequestOptions({ headers: headers });
+    values.isexam = isExam;
+    values.part_id = part_id;
+    console.log(values);
+    const postReq = this.http.post(
+      "http://localhost:4444/api/question",
+      values,
       options
     );
     postReq.subscribe( (res3)=>{ } );

@@ -106,42 +106,55 @@
         <input type="hidden" name="part_id" [(ngModel)]="part.part_id">
         <input type="hidden" name="section_id" [(ngModel)]="part.section_id">
 
-        <h4>Frågor</h4>
-        <table class="part-question col col-md-12">
-          <tr>
-            <th class="question">Övningsfrågor</th>
-            <th class="answer">Svar</th>
-          </tr>
-          <tr *ngFor="let question of part.question">
-            <td class="question"> <input type="text" name="question" value="{{question.question}}"></td>
-            <td class="answer"> <input type="text" name="answer" value="{{question.answer}}"></td>
-          </tr>
-          <tr *ngFor="let i of newRegularFields">
-            <td class="question"> <input type="text" name="question" placeholder="Ny Fråga"></td>
-            <td class="answer"> <input type="text" name="answer" placeholder="Nytt svar"></td>
-          </tr>
-        </table>
-        <button class="edit" type="button" name="button" (click)="newRegularFields.push(0);">Ännu en övningsfråga</button>
-        <table class="part-question col col-md-12">
-          <tr>
-            <th class="question">Examineringsfrågor</th>
-            <th class="answer">Svar</th>
-          </tr>
-          <tr *ngFor="let question of part.exam">
-            <td class="question"><input type="text" name="exam_question" [ngModel]="question.question"></td>
-            <td class="answer"><input type="text" name="exam_answer" [ngModel]="question.answer"></td>
-          </tr>
-          <tr *ngFor="let i of newExamFields">
-            <td class="question"> <input type="text" name="exam_question" placeholder="Ny Fråga"></td>
-            <td class="answer"> <input type="text" name="exam_answer" placeholder="Nytt svar"></td>
-          </tr>
-        </table>
-        <button class="edit" type="button" name="button" (click)="newExamFields.push(0);">Ännu en provfråga</button>
-
-        <hr>
         <input class="edit" type="submit" value="Spara ändringar">
         <button class="edit" type="button" name="button" (click)="part.part_edit = !part.part_edit;">Tillbaka</button>
       </form>
+      <hr>
+
+      <h4>Frågor</h4>
+      <table class="part-question col col-md-12">
+        <tr>
+          <th class="question">Övningsfrågor</th>
+          <th class="answer">Svar</th>
+        </tr>
+        <tr *ngFor="let question of part.question">
+          <form class="new-form" #edit_question_form=ngForm (ngSubmit)="Teacher.editQuestion(false, question.question_id, edit_question_form.value)">
+            <td class="question"><input type="text" name="question" [ngModel]="question.question"></td>
+            <td class="answer"><input type="text" name="answer" [ngModel]="question.answer"></td>
+            <td class="question_submit"><input type="submit" name="s" value="Spara"></td>
+          </form>
+        </tr>
+        <tr *ngFor="let i of newRegularFields">
+          <form class="new-form"  #new_question_form=ngForm (ngSubmit)="Teacher.newQuestion(false, part.part_id, new_question_form.value)">
+            <td class="question"> <input type="text" name="question" placeholder="Ny Fråga" ngModel></td>
+            <td class="answer"> <input type="text" name="answer" placeholder="Nytt svar" ngModel></td>
+            <td class="question_submit"><input type="submit" name="s" value="Spara"></td>
+          </form>
+        </tr>
+      </table>
+      <button class="edit" type="button" name="button" (click)="newRegularFields.push(0);">Ännu en övningsfråga</button>
+      <table class="part-question col col-md-12">
+        <tr>
+          <th class="question">Examineringsfrågor</th>
+          <th class="answer">Svar</th>
+        </tr>
+        <tr *ngFor="let question of part.exam">
+          <form class="new-form">
+            <td class="question"><input type="text" name="question" [ngModel]="question.question"></td>
+            <td class="answer"><input type="text" name="answer" [ngModel]="question.answer"></td>
+            <td class="question_submit"><input type="submit" name="s" value="Spara"></td>
+          </form>
+        </tr>
+        <tr *ngFor="let i of newExamFields">
+          <form class="new-form" #new_exam_form=ngForm (ngSubmit)="Teacher.newQuestion(true, part.part_id, new_exam_form.value)">
+            <td class="question"> <input type="text" name="question" placeholder="Ny Fråga" ngModel></td>
+            <td class="answer"> <input type="text" name="answer" placeholder="Nytt svar" ngModel></td>
+            <td class="question_submit"><input type="submit" name="s" value="Spara"></td>
+          </form>
+        </tr>
+      </table>
+      <button class="edit" type="button" name="button" (click)="newExamFields.push(0);">Ännu en provfråga</button>
+
     </div>
   </div>
 

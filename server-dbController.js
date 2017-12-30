@@ -83,6 +83,7 @@ exports.newPart = function(req, res) {
 exports.newQuestion=function(req, res){
   client.query("INSERT INTO question (question, answer, isexam, part_id)\
                 VALUES ('"+req.body.question+"','"+req.body.answer+"','"+req.body.isexam+"','"+req.body.part_id+"');", (err, res) => {
+                  console.log(err);
   });
   res.send(200);
 }
