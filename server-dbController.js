@@ -36,6 +36,29 @@ exports.part = function(req, response) {
   });
 };
 
+exports.question = function(req, response){
+  let q = "";
+  if (parseInt(req.query.exam)) {
+    console.log(req.query.exam);
+    q = "\
+    SELECT q.question, q.answer, q.question_id, ps.section_id, ps.part_id \
+    FROM question as q\
+    LEFT JOIN\
+    (SELECT section_id, part_id FROM part) AS ps\
+    ON q.part_id = ps.part_id\
+    WHERE q.isexam = 't' AND ps.section_id = " + req.query.id + ";";
+  }else{
+    q = "\
+    SELECT question, answer, question_id, part_id, isexam \
+    FROM question\
+    WHERE part_id = "+ req.query.id +";";
+  }
+  client.query(q, (err, res)=>{
+
+    response.send(res.rows);
+  });
+}
+
 
 /* ------------ NEWS ---------------- */
 
@@ -57,6 +80,13 @@ exports.newPart = function(req, res) {
   res.send(200);
 };
 
+exports.newQuestion=function(req, res){
+  client.query("INSERT INTO question (question, answer, isexam, part_id)\
+                VALUES ('"+req.body.question+"','"+req.body.answer+"','"+req.body.isexam+"','"+req.body.part_id+"');", (err, res) => {
+  });
+  res.send(200);
+}
+
 
 /* ------------ EDITS ---------------- */
 
@@ -77,6 +107,7 @@ exports.editPart = function(req, res){
   res.send(200);
 }
 
+exports.editQuestion=function(req, res){}
 
 /* ------------ QUESTIONS ---------------- */
 
@@ -85,10 +116,6 @@ exports.saveResults = function(req, res) {
   res.send(200);
 };
 
-exports.getQuestion = function(req, res) {
-  console.log(req.body);
-  res.send(200);
-};
 
 
 /* ------------ AUTHENTICATION ---------------- */

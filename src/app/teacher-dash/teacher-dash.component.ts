@@ -28,6 +28,9 @@ export class TeacherDashComponent implements OnInit {
   private active_section_id = "1";//"";
   private editName:string;
 
+  private newRegularFields=[0];
+  private newExamFields=[0];
+
   constructor(private Teacher:TeacherServiceService, private domSanitizer : DomSanitizer){//, private fb: FormBuilder) {
     Teacher.getSections();
   }
@@ -41,6 +44,7 @@ export class TeacherDashComponent implements OnInit {
     this.active_section_desc = section.description;
     this.active_section_id = section.section_id;
     this.section_fullscreen = true;
+    this.Teacher.getParts(section.section_id);
   }
 
   compose_video_url(id){

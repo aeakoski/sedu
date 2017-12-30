@@ -12,9 +12,11 @@ import { SECTIONS } from './mock-sections'
 export class TeacherServiceService {
   private website_api = "http://localhost:4444/api/";
   public section: any;
-  public part: any;
+  public parts: any;
 
   constructor(private http: Http) { }
+
+  /* ---------------- Getters -----------------*/
 
   getSections(){
     const req = this.http.get(this.website_api + "section");
@@ -25,6 +27,49 @@ export class TeacherServiceService {
       }
     );
   }
+
+  getParts(sectionid){
+    console.log("getting parts")
+    const req = this.http.get(this.website_api + "part?sectionid=" + sectionid);
+    req.subscribe(
+      (res)=>{
+        console.log(res.json());
+        this.parts = res.json();
+
+        for(let i = 0; i<this.parts.length; i++){
+            this.parts[i].question = [];
+            this.parts[i].exam = [];
+            this.http.get(this.website_api + "question?isexam=" + 0 + "&id="+ this.parts[i].part_id)
+            .subscribe(
+              (res)=>{
+                console.log(res.json().length)
+                for(let j=0; j < res.json().length; j++){
+                  if(res.json()[j].isexam){
+                    console.log("isexam");
+                      this.parts[i].exam.push(res.json()[j]);
+                  }else{
+                    console.log("isexam - NOT");
+                      this.parts[i].question.push(res.json()[j]);
+                  }
+                }
+            }
+          );
+        }
+      }
+    );
+  }
+
+  getQuestions(isExam, id){
+    const req = this.http.get(this.website_api + "question?isexam=" + isExam + "&id="+ id);
+    req.subscribe(
+      (res)=>{
+        //console.log(res.json());
+        return res.json();
+      }
+    );
+  }
+
+  /* ---------------- Editers -----------------*/
 
   editSection(section){
     console.log(section);
@@ -58,15 +103,7 @@ export class TeacherServiceService {
     postReq.subscribe( (res3)=>{ } );
   }
 
-  getParts(sectionid){
-    const req = this.http.get(this.website_api + "part?sectionid=" + sectionid);
-    req.subscribe(
-      (res)=>{
-        console.log(res.json());
-        this.part = res.json();
-      }
-    );
-  }
+  /* ---------------- Creates -----------------*/
 
   createNewSection(values){
     let headers = new Headers();

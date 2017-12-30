@@ -16,7 +16,7 @@
         <p>{{section.description}}</p>
 
         <h3>Delmoment {{(section.part_count)?section.part_count:"0"}}st</h3>
-        <button class="edit" type="button" name="button" (click)="Teacher.getParts(section.section_id); setActiveSection(section)">Redigera sektion</button>
+        <button class="edit" type="button" name="button" (click)="setActiveSection(section)">Redigera sektion</button>
       </div>
     </div>
 
@@ -56,7 +56,7 @@
     <input type="button" class="edit" value="Tillbaka" name="back" (click)="section_edit = !section_edit;">
   </form>
 
-  <div class="card" *ngFor="let part of Teacher.part">
+  <div class="card" *ngFor="let part of Teacher.parts">
     <div [hidden]="part.part_edit">
       <h3 class="header light-blue">{{part.name}}</h3>
       <h4>Delbeskrivning: </h4>
@@ -69,6 +69,30 @@
           oallowfullscreen="oallowfullscreen"
           webkitallowfullscreen="webkitallowfullscreen">
       </iframe>
+
+      <table class="part-question col col-md-12">
+        <tr>
+          <th class="question">Övningsfrågor</th>
+          <th class="answer">Svar</th>
+        </tr>
+        <tr *ngFor="let question of part.question">
+          <td class="question">{{question.question}}</td>
+          <td class="answer">{{question.answer}}</td>
+        </tr>
+      </table>
+
+      <table class="part-question col col-md-12">
+        <tr>
+          <th class="question">Examineringsfrågor</th>
+          <th class="answer">Svar</th>
+        </tr>
+        <tr *ngFor="let question of part.exam">
+          <td class="question">{{question.question}}</td>
+          <td class="answer">{{question.answer}}</td>
+        </tr>
+      </table>
+
+      <hr>
       <i class="fa fa-pencil-square-o fa-2x" (click)="part.part_edit = !part.part_edit; compose_video_url(part.video);" aria-hidden="true">Redigera del</i>
     </div>
 
@@ -81,6 +105,39 @@
         <input class="" type="text" name="video" [(ngModel)]="full_video_url">
         <input type="hidden" name="part_id" [(ngModel)]="part.part_id">
         <input type="hidden" name="section_id" [(ngModel)]="part.section_id">
+
+        <h4>Frågor</h4>
+        <table class="part-question col col-md-12">
+          <tr>
+            <th class="question">Övningsfrågor</th>
+            <th class="answer">Svar</th>
+          </tr>
+          <tr *ngFor="let question of part.question">
+            <td class="question"> <input type="text" name="question" value="{{question.question}}"></td>
+            <td class="answer"> <input type="text" name="answer" value="{{question.answer}}"></td>
+          </tr>
+          <tr *ngFor="let i of newRegularFields">
+            <td class="question"> <input type="text" name="question" placeholder="Ny Fråga"></td>
+            <td class="answer"> <input type="text" name="answer" placeholder="Nytt svar"></td>
+          </tr>
+        </table>
+        <button class="edit" type="button" name="button" (click)="newRegularFields.push(0);">Ännu en övningsfråga</button>
+        <table class="part-question col col-md-12">
+          <tr>
+            <th class="question">Examineringsfrågor</th>
+            <th class="answer">Svar</th>
+          </tr>
+          <tr *ngFor="let question of part.exam">
+            <td class="question"><input type="text" name="exam_question" [ngModel]="question.question"></td>
+            <td class="answer"><input type="text" name="exam_answer" [ngModel]="question.answer"></td>
+          </tr>
+          <tr *ngFor="let i of newExamFields">
+            <td class="question"> <input type="text" name="exam_question" placeholder="Ny Fråga"></td>
+            <td class="answer"> <input type="text" name="exam_answer" placeholder="Nytt svar"></td>
+          </tr>
+        </table>
+        <button class="edit" type="button" name="button" (click)="newExamFields.push(0);">Ännu en provfråga</button>
+
         <hr>
         <input class="edit" type="submit" value="Spara ändringar">
         <button class="edit" type="button" name="button" (click)="part.part_edit = !part.part_edit;">Tillbaka</button>

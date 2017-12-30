@@ -59,18 +59,7 @@
         */
         .post(db.newPart);
 
-      app.route('/api/result')
-        /*
-        Parameters
-          studentid = int
-          sectionid = int
-          questionid = int
-          answer = string
-        */
-        .post(db.saveResults)
-
-
-      app.route('api/question')
+      app.route('/api/question')
         /*
         Parameters:
         exam, int, 0 or 1
@@ -84,7 +73,20 @@
         Example:
             www.sedu.fly/api/question?exam=0&id=12
         */
-        .get(db.getQuestion);
+        .get(db.question)
+        .post(db.newQuestion)
+        .put(db.editQuestion);
+
+
+      app.route('/api/result')
+        /*
+        Parameters
+          studentid = int
+          sectionid = int
+          questionid = int
+          answer = string
+        */
+        .post(db.saveResults)
 
       app.route('/api/login')
         /*
