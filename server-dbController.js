@@ -142,6 +142,23 @@ exports.removePart = function(req, res){
   res.send(200);
 }
 
+exports.removeSection = function(req, res){
+  console.log("DELETEING SECTION");
+  console.log(req.query);
+  client.query("DELETE FROM question\
+                WHERE part_id IN\
+                (SELECT part_id FROM part WHERE section_id = " + req.query.id+ ");\
+                DELETE FROM part\
+                WHERE part_id IN\
+                (SELECT part_id FROM part WHERE section_id = " + req.query.id+ ");\
+                DELETE FROM section\
+                WHERE section_id = " + req.query.id+ ";\
+                ", (err, res) => {
+                  if (err) {console.log(err);}
+  });
+  res.send(200);
+}
+
 
 /* ------------ QUESTIONS ---------------- */
 

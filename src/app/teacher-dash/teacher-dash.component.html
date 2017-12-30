@@ -44,7 +44,8 @@
   <div class="card" style="min-height:250px;" [hidden]="section_edit">
     <h2 class="header dark-blue">{{active_section_name}}</h2>
     <p>{{active_section_desc}}</p>
-    <i class="fa fa-pencil-square-o fa-2x" (click)="section_edit = !section_edit" aria-hidden="true"> Redigera</i>
+    <button type="button" class="edit" (click)="section_edit = !section_edit" name="button">Redigera sektionen</button>
+    <button type="button" class="edit" (click)="Teacher.removeSection(active_section_id)" name="button">Ta bort hela sektionen</button>
   </div>
   <hr>
   <form class="new-form" [hidden]="!section_edit" #selection_edit_form=ngForm (ngSubmit)="Teacher.editSection(selection_edit_form.value); section_edit = !section_edit; hasUpdated=true;">

@@ -28,7 +28,16 @@
           section_id = string
           token = string
         */
-        .put(db.editSection);
+        .put(db.editSection)
+
+        /*
+        URL Params
+        id = part_id
+
+        Example:
+        /api/section?id=1
+        */
+        .delete(db.removeSection);
 
       app.route('/api/part/')
         /*
