@@ -9,7 +9,6 @@ DROP TABLE Part;
 CREATE TABLE Student(
 name text,
 username text,
-password text,
 student_ID SERIAL,
 PRIMARY KEY (student_ID)
 
@@ -53,11 +52,36 @@ part_ID SERIAL,
 PRIMARY KEY (part_ID)
 );
 
-INSERT INTO Student (name, username, password)
-VALUES('Milda Matilda', 'missmm', '12345');
+CREATE TABLE users(
+username text,
+password text,
+isTeacher Boolean,
+id SERIAL,
+PRIMARY KEY (id)
+);
 
-INSERT INTO Student (name, username, password)
-VALUES('John Doe', 'jdoe', '12345');
+INSERT INTO Student (name, username)
+VALUES('Milda Matilda', 'missmm');
+
+INSERT INTO Student (name, username)
+VALUES('John Doe', 'jdoe');
+
+---
+
+INSERT INTO Student (name, username)
+VALUES('Bertil Bsson', 'bbb');
+
+INSERT INTO Student (name, username)
+VALUES('Ceasar Csson', 'ccc');
+
+INSERT INTO users (username, password, isTeacher)
+VALUES ('aaa','aaa',true);
+
+INSERT INTO users (username, password, isTeacher)
+VALUES ('bbb','bbb',false);
+
+INSERT INTO users (username, password, isTeacher)
+VALUES ('ccc','ccc',false);
 
 /*
 SELECT * FROM Student WHERE username = 'jdoe' AND password = '12345'

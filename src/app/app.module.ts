@@ -10,13 +10,16 @@ import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { TeacherDashComponent } from './teacher-dash/teacher-dash.component';
 import { TeacherServiceService } from './teacher-service.service';
+import { AuthService } from './auth.service';
+import { StudentDashComponent } from './student-dash/student-dash.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    TeacherDashComponent
+    TeacherDashComponent,
+    StudentDashComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,10 @@ import { TeacherServiceService } from './teacher-service.service';
     ReactiveFormsModule
 
   ],
-  providers: [TeacherServiceService],
+  providers: [
+    TeacherServiceService,
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

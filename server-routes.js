@@ -3,6 +3,7 @@
 
     module.exports = function(app) {
       var db = require('./server-dbController');
+      var auth = require('./server-authController')
       // todoList Routes
 
       app.route('/api/section/')
@@ -114,18 +115,19 @@
         */
         .post(db.saveResults)
 
-      app.route('/api/login')
+      app.route('/api/auth')
         /*
         Parameters:
           username
           password
           sessionid
         */
-        .get(db.login)
-        .post(db.login);
+        //.get(db.login)
+        .post(auth.login);
 
       app.route('/*')
         .get(function(req, res) {
+            console.log("STANDARD");
             res.sendFile(html + '/index.html');
         });
   };
