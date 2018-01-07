@@ -6,7 +6,8 @@
         <div class="item item-l">
           <span class="header">SEDU: Segelflyg - Educational platform</span>
         </div>
-        <div class="item item-r">
+        
+        <div class="item item-r" [hidden]="!Auth.get_isLoggedIn()">
           <span>Alexander Koski: Elev</span><i class="fa fa-user" aria-hidden="true"></i>
         </div>
     </div>

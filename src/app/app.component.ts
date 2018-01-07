@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { section } from './section';
+import { AuthService } from './auth.service';
+
 
 @Component({
   selector: 'app-root',
@@ -7,5 +9,7 @@ import { section } from './section';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  constructor(private Auth:AuthService){}
+
   title = 'app';
 }
