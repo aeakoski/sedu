@@ -3,8 +3,6 @@ import { Http, Headers, Response } from '@angular/http';
 import {RequestOptions, Request, RequestMethod} from '@angular/http';
 import {Router} from '@angular/router';
 
-
-
 @Injectable()
 export class AuthService {
 
@@ -13,13 +11,12 @@ export class AuthService {
   private username:string;
   private first_name:string;
   private last_name:string;
-  private isTeacher:boolean;
-  private isLoggedIn = false;
+  private isTeacher:boolean = false;
+  private isLoggedIn:boolean = false;
   private token:string;
 
-  get_isLoggedIn(){
-    return this.isLoggedIn;
-  }
+  get_isLoggedIn(){ return this.isLoggedIn; }
+  get_isTeacher(){ return this.isTeacher; }
 
   ping(){
     console.log("Ping");

@@ -12,6 +12,7 @@ import { TeacherDashComponent } from './teacher-dash/teacher-dash.component';
 import { TeacherServiceService } from './teacher-service.service';
 import { AuthService } from './auth.service';
 import { StudentDashComponent } from './student-dash/student-dash.component';
+import { TeacherGuard, StudentGuard } from './guard.service';
 
 @NgModule({
   declarations: [
@@ -31,8 +32,10 @@ import { StudentDashComponent } from './student-dash/student-dash.component';
   ],
   providers: [
     TeacherServiceService,
-    AuthService
-  ],
+    AuthService,
+    TeacherGuard,
+    StudentGuard
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

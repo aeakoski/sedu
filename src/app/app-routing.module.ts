@@ -5,18 +5,26 @@ import { HomeComponent } from './home/home.component'
 import { LoginComponent } from './login/login.component'
 import { TeacherDashComponent } from './teacher-dash/teacher-dash.component';
 import { StudentDashComponent } from './student-dash/student-dash.component';
+import { TeacherGuard, StudentGuard } from './guard.service'
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
   { path: 'login', component: LoginComponent},
-  { path: 'teacher', component: TeacherDashComponent},
-  { path: 'student', component: StudentDashComponent}
+  { path: 'teacher',
+    component: TeacherDashComponent,
+    canActivate: [TeacherGuard]
+  },
+  { path: 'student',
+    component: StudentDashComponent,
+    canActivate: [StudentGuard]
+
+  }
 
 
 ];
 
 @NgModule({
   imports: [ RouterModule.forRoot(routes) ],
-  exports:[RouterModule]
+  exports:[RouterModule],
 })
 export class AppRoutingModule { }

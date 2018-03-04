@@ -1,8 +1,9 @@
-    'use strict';
-    const html = __dirname + '/dist';
+    'use strict'
+    const path = require('path')
+    const html = path.join(__dirname, '/dist')
 
-    module.exports = function(app) {
-      var db = require('./server-dbController');
+    module.exports = function (app) {
+      var db = require('./server-dbController')
       var auth = require('./server-authController')
       // todoList Routes
 
@@ -38,7 +39,7 @@
         Example:
         /api/section?id=1
         */
-        .delete(db.removeSection);
+        .delete(db.removeSection)
 
       app.route('/api/part/')
         /*
@@ -76,7 +77,7 @@
         Example:
         /api/part?id=1
         */
-        .delete(db.removePart);
+        .delete(db.removePart)
 
       app.route('/api/question')
         /*
@@ -102,8 +103,7 @@
         Example:
         /api/question?id=1
         */
-        .delete(db.removeQuestion);
-
+        .delete(db.removeQuestion)
 
       app.route('/api/result')
         /*
@@ -122,12 +122,12 @@
           password
           sessionid
         */
-        //.get(db.login)
-        .post(auth.login);
+        // .get(db.login)
+        .post(auth.login)
 
       app.route('/*')
-        .get(function(req, res) {
-            console.log("STANDARD");
-            res.sendFile(html + '/index.html');
-        });
-  };
+        .get(function (req, res) {
+          console.log('STANDARD')
+          res.sendFile(html + '/index.html')
+        })
+    }
