@@ -2,7 +2,7 @@
 <div class="col col-md-6">
   <h2>Login Form</h2>
   <div class="col col-md-12">
-    <form class="" #login=ngForm (ngSubmit)="Auth.signIn(login.value.name, login.value.password)">
+    <form class="" #login=ngForm (ngSubmit)="signIn(login.value.name, login.value.password)">
       <input type="text" name="name" ngModel>
       <input type="password" name="password" ngModel>
       <input type="submit" name="sub" value="Logga in">
