@@ -13,7 +13,6 @@ const client = new Client({
 
 client.connect()
 
-
 let decode = function (token) {
   try {
     jwt.verify(token, secure.secret)
@@ -40,6 +39,7 @@ exports.section = function (req, response) {
                 GROUP BY section_id
                 ) AS t
                 ON s.section_id = t.section_id;`, (err, res) => {
+    if (err) { console.log(err) }
     response.send(res.rows)
   })
 }
@@ -50,6 +50,7 @@ exports.part = function (req, response) {
     return
   }
   client.query('SELECT * FROM part WHERE section_id = ' + req.query.sectionid + ';', (err, res) => {
+    if (err) { console.log(err) }
     response.send(res.rows)
   })
 }
@@ -76,6 +77,7 @@ exports.question = function (req, response) {
     WHERE part_id = '${req.query.id}';`
   }
   client.query(q, (err, res) => {
+    if (err) { console.log(err) }
     response.send(res.rows)
   })
 }
@@ -89,6 +91,7 @@ exports.newSection = function (req, res) {
   }
   client.query(`INSERT INTO section (name, description)
                 VALUES ('${req.body.name}','${req.body.description}');`, (err, res) => {
+    if (err) { console.log(err) }
   })
   res.send(200)
 }
@@ -101,6 +104,7 @@ exports.newPart = function (req, res) {
   }
   client.query(`INSERT INTO part (name, description, video, section_id)
                 VALUES ('${req.body.name}','${req.body.description}','${req.body.video}','${req.body.section_id}');`, (err, res) => {
+    if (err) { console.log(err) }
   })
   res.send(200)
 }
@@ -110,8 +114,8 @@ exports.newQuestion = function (req, res) {
     res.send(401)
     return
   }
-  client.query("INSERT INTO question (question, answer, isexam, part_id)\
-                VALUES ('" + req.body.question + "','" + req.body.answer + "','" + req.body.isexam + "','" + req.body.part_id + "');", (err, res) => {
+  client.query(`INSERT INTO question (question, answer, isexam, part_id)
+                VALUES ('${req.body.question}','${req.body.answer}','${req.body.isexam}','${req.body.part_id}');`, (err, res) => {
     console.log(err)
   })
   res.send(200)
@@ -127,6 +131,7 @@ exports.editSection = function (req, res) {
   client.query(`UPDATE section
                 SET name = '${req.body.name}', description = '${req.body.description}'
                 WHERE section_id = ${req.body.section_id};`, (err, res) => {
+    if (err) { console.log(err) }
   })
   res.send(200)
 }
@@ -140,6 +145,7 @@ exports.editPart = function (req, res) {
   client.query(`UPDATE part
                 SET name = '${req.body.name}', description = '${req.body.description}', video = '${req.body.video}'
                 WHERE part_id = ${req.body.part_id};`, (err, res) => {
+    if (err) { console.log(err) }
   })
   res.send(200)
 }
@@ -149,9 +155,9 @@ exports.editQuestion = function (req, res) {
     res.send(401)
     return
   }
-  client.query("UPDATE question\
-                SET question = '" + req.body.question + "', answer = '" + req.body.answer + "'\
-                WHERE question_id = " + req.body.question_id + ';', (err, res) => {
+  client.query(`UPDATE question
+                SET question = '${req.body.question}', answer = '${req.body.answer}'
+                WHERE question_id = ${req.body.question_id};`, (err, res) => {
     if (err) { console.log(err) }
   })
   res.send(200)
@@ -163,8 +169,8 @@ exports.removeQuestion = function (req, res) {
     res.send(401)
     return
   }
-  client.query('DELETE FROM question\
-                WHERE question_id = ' + req.query.id + ';', (err, res) => {
+  client.query(`DELETE FROM question
+                WHERE question_id = ${req.query.id};`, (err, res) => {
     if (err) { console.log(err) }
   })
   res.send(200)
@@ -176,11 +182,11 @@ exports.removePart = function (req, res) {
     return
   }
   console.log('DELETEING PART')
-  client.query('DELETE FROM question\
-                WHERE part_id = ' + req.query.id + ';\
-                DELETE FROM part\
-                WHERE part_id = ' + req.query.id + ';\
-                ', (err, res) => {
+  client.query(`DELETE FROM question
+                WHERE part_id = ${req.query.id};
+                DELETE FROM part
+                WHERE part_id = ${req.query.id};
+                `, (err, res) => {
     if (err) { console.log(err) }
   })
   res.send(200)
@@ -192,15 +198,15 @@ exports.removeSection = function (req, res) {
     return
   }
   console.log('DELETEING SECTION')
-  client.query('DELETE FROM question\
-                WHERE part_id IN\
-                (SELECT part_id FROM part WHERE section_id = ' + req.query.id + ');\
-                DELETE FROM part\
-                WHERE part_id IN\
-                (SELECT part_id FROM part WHERE section_id = ' + req.query.id + ');\
-                DELETE FROM section\
-                WHERE section_id = ' + req.query.id + ';\
-                ', (err, res) => {
+  client.query(`DELETE FROM question
+                WHERE part_id IN
+                (SELECT part_id FROM part WHERE section_id = ${req.query.id});
+                DELETE FROM part
+                WHERE part_id IN
+                (SELECT part_id FROM part WHERE section_id = ${req.query.id});
+                DELETE FROM section
+                WHERE section_id = ${req.query.id};
+                `, (err, res) => {
     if (err) { console.log(err) }
   })
   res.send(200)
