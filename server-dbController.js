@@ -13,14 +13,20 @@ const client = new Client({
 
 client.connect()
 
+
+let decode = function (token) {
+  try {
+    jwt.verify(token, secure.secret)
+    return true
+  } catch (e) {
+    return false
+  }
+}
+
 /* ------------ REGULAR GETS ---------------- */
 
 exports.section = function (req, response) {
-  let decoded
-  try {
-    decoded = jwt.verify(req.query.token, secure.secret)
-  } catch (e) {}
-  if (!decoded) {
+  if (!decode(req.query.token)) {
     response.send(401)
     return
   }
@@ -39,11 +45,7 @@ exports.section = function (req, response) {
 }
 
 exports.part = function (req, response) {
-  let decoded
-  try {
-    decoded = jwt.verify(req.query.token, secure.secret)
-  } catch (e) {}
-  if (!decoded) {
+  if (!decode(req.query.token)) {
     response.send(401)
     return
   }
@@ -53,11 +55,7 @@ exports.part = function (req, response) {
 }
 
 exports.question = function (req, response) {
-  let decoded
-  try {
-    decoded = jwt.verify(req.query.token, secure.secret)
-  } catch (e) {}
-  if (!decoded) {
+  if (!decode(req.query.token)) {
     response.send(401)
     return
   }
@@ -85,17 +83,22 @@ exports.question = function (req, response) {
 /* ------------ NEWS ---------------- */
 
 exports.newSection = function (req, res) {
-  console.log('NEW Section')
-  console.log(req.body)
+  if (!decode(req.query.token)) {
+    res.send(401)
+    return
+  }
   client.query(`INSERT INTO section (name, description)
                 VALUES ('${req.body.name}','${req.body.description}');`, (err, res) => {
-    // console.log(err, res)
   })
   res.send(200)
 }
 
 exports.newPart = function (req, res) {
   // TODO Sanitize video!!!
+  if (!decode(req.query.token)) {
+    res.send(401)
+    return
+  }
   client.query(`INSERT INTO part (name, description, video, section_id)
                 VALUES ('${req.body.name}','${req.body.description}','${req.body.video}','${req.body.section_id}');`, (err, res) => {
   })
@@ -103,6 +106,10 @@ exports.newPart = function (req, res) {
 }
 
 exports.newQuestion = function (req, res) {
+  if (!decode(req.query.token)) {
+    res.send(401)
+    return
+  }
   client.query("INSERT INTO question (question, answer, isexam, part_id)\
                 VALUES ('" + req.body.question + "','" + req.body.answer + "','" + req.body.isexam + "','" + req.body.part_id + "');", (err, res) => {
     console.log(err)
@@ -113,23 +120,35 @@ exports.newQuestion = function (req, res) {
 /* ------------ EDITS ---------------- */
 
 exports.editSection = function (req, res) {
-  client.query("UPDATE section\
-                SET name = '" + req.body.name + "', description = '" + req.body.description + "'\
-                WHERE section_id = " + req.body.section_id + ';', (err, res) => {
+  if (!decode(req.query.token)) {
+    res.send(401)
+    return
+  }
+  client.query(`UPDATE section
+                SET name = '${req.body.name}', description = '${req.body.description}'
+                WHERE section_id = ${req.body.section_id};`, (err, res) => {
   })
   res.send(200)
 }
 
 exports.editPart = function (req, res) {
   // TODO Sanitize video URL!!!!!!!!
-  client.query("UPDATE part\
-                SET name = '" + req.body.name + "', description = '" + req.body.description + "', video = '" + req.body.video + "'\
-                WHERE part_id = " + req.body.part_id + ';', (err, res) => {
+  if (!decode(req.query.token)) {
+    res.send(401)
+    return
+  }
+  client.query(`UPDATE part
+                SET name = '${req.body.name}', description = '${req.body.description}', video = '${req.body.video}'
+                WHERE part_id = ${req.body.part_id};`, (err, res) => {
   })
   res.send(200)
 }
 
 exports.editQuestion = function (req, res) {
+  if (!decode(req.query.token)) {
+    res.send(401)
+    return
+  }
   client.query("UPDATE question\
                 SET question = '" + req.body.question + "', answer = '" + req.body.answer + "'\
                 WHERE question_id = " + req.body.question_id + ';', (err, res) => {
@@ -140,8 +159,10 @@ exports.editQuestion = function (req, res) {
 
 /* ------------ DELETES ---------------- */
 exports.removeQuestion = function (req, res) {
-  console.log('DELETEING QUESTION')
-  console.log(req.query)
+  if (!decode(req.query.token)) {
+    res.send(401)
+    return
+  }
   client.query('DELETE FROM question\
                 WHERE question_id = ' + req.query.id + ';', (err, res) => {
     if (err) { console.log(err) }
@@ -150,8 +171,11 @@ exports.removeQuestion = function (req, res) {
 }
 
 exports.removePart = function (req, res) {
+  if (!decode(req.query.token)) {
+    res.send(401)
+    return
+  }
   console.log('DELETEING PART')
-  console.log(req.query)
   client.query('DELETE FROM question\
                 WHERE part_id = ' + req.query.id + ';\
                 DELETE FROM part\
@@ -163,8 +187,11 @@ exports.removePart = function (req, res) {
 }
 
 exports.removeSection = function (req, res) {
+  if (!decode(req.query.token)) {
+    res.send(401)
+    return
+  }
   console.log('DELETEING SECTION')
-  console.log(req.query)
   client.query('DELETE FROM question\
                 WHERE part_id IN\
                 (SELECT part_id FROM part WHERE section_id = ' + req.query.id + ');\
@@ -183,15 +210,5 @@ exports.removeSection = function (req, res) {
 
 exports.saveResults = function (req, res) {
   console.log(req.body)
-  res.send(200)
-}
-
-/* ------------ AUTHENTICATION ---------------- */
-
-exports.login = function (req, res) {
-  console.log(req.body)
-  client.query("SELECT * FROM Student WHERE username = 'jdoe' AND password = '12345'", (err, res) => {
-    // console.log(err, res)
-  })
   res.send(200)
 }

@@ -25,9 +25,11 @@ exports.login = function (req, res) {
       res.send(401)
       return
     }
-    console.log(result.rows[0])
     let token = jwt.sign(
-      {username: result.rows[0].username},
+      {
+        username: result.rows[0].username,
+        isTeacher: result.rows[0].isTeacher
+      },
       secure.secret,
       {expiresIn: '4h'}
     )
