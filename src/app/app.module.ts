@@ -16,8 +16,6 @@ import { StudentDashComponent } from './student-dash/student-dash.component';
 
 import { AppRoutingModule } from './app-routing.module';
 
-console.log('Imports done')
-
 @NgModule({
   declarations: [
     AppComponent,

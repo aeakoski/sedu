@@ -85,7 +85,7 @@ exports.question = function (req, response) {
 /* ------------ NEWS ---------------- */
 
 exports.newSection = function (req, res) {
-  if (!decode(req.query.token)) {
+  if (!decode(req.body.token)) {
     res.send(401)
     return
   }
@@ -98,7 +98,7 @@ exports.newSection = function (req, res) {
 
 exports.newPart = function (req, res) {
   // TODO Sanitize video!!!
-  if (!decode(req.query.token)) {
+  if (!decode(req.body.token)) {
     res.send(401)
     return
   }
@@ -110,7 +110,7 @@ exports.newPart = function (req, res) {
 }
 
 exports.newQuestion = function (req, res) {
-  if (!decode(req.query.token)) {
+  if (!decode(req.body.token)) {
     res.send(401)
     return
   }
@@ -124,7 +124,7 @@ exports.newQuestion = function (req, res) {
 /* ------------ EDITS ---------------- */
 
 exports.editSection = function (req, res) {
-  if (!decode(req.query.token)) {
+  if (!decode(req.body.token)) {
     res.send(401)
     return
   }
@@ -138,7 +138,7 @@ exports.editSection = function (req, res) {
 
 exports.editPart = function (req, res) {
   // TODO Sanitize video URL!!!!!!!!
-  if (!decode(req.query.token)) {
+  if (!decode(req.body.token)) {
     res.send(401)
     return
   }
@@ -151,7 +151,7 @@ exports.editPart = function (req, res) {
 }
 
 exports.editQuestion = function (req, res) {
-  if (!decode(req.query.token)) {
+  if (!decode(req.body.token)) {
     res.send(401)
     return
   }

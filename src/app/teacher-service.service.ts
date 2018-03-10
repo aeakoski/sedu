@@ -74,6 +74,7 @@ export class TeacherServiceService {
   /* ---------------- Editers -----------------*/
 
   editSection(section){
+    section.token = this.Auth.get_token()
     console.log(section);
     let headers = new Headers();
     headers.append('content-type', 'application/json');
@@ -88,6 +89,7 @@ export class TeacherServiceService {
 
   editPart(part){
     console.log(part)
+    part.token = this.Auth.get_token()
     let headers = new Headers();
     headers.append('content-type', 'application/json');
     let options = new RequestOptions({ headers: headers });
@@ -106,6 +108,7 @@ export class TeacherServiceService {
   }
 
   editQuestion(isExam, id, values){
+    values.token = this.Auth.get_token()
     let headers = new Headers();
     headers.append('content-type', 'application/json');
     let options = new RequestOptions({ headers: headers });
@@ -123,10 +126,10 @@ export class TeacherServiceService {
   /* ---------------- Creates -----------------*/
 
   createNewSection(values){
+    values.token = this.Auth.get_token()
     let headers = new Headers();
     headers.append('content-type', 'application/json');
     let options = new RequestOptions({ headers: headers });
-
     const postReq = this.http.post(
       "http://localhost:4444/api/section",
       values,
@@ -136,13 +139,14 @@ export class TeacherServiceService {
   }
 
   createNewPart(part){
+    part.token = this.Auth.get_token()
     let headers = new Headers();
     headers.append('content-type', 'application/json');
     let options = new RequestOptions({ headers: headers });
     let video_id = part.video.split("=")
     if (video_id.length != 2){
       //TODO Throw error
-      console.log("FUUUUUUU!");
+      console.log("Not a valid youtube URL");
     }
     part.video = video_id[1];
     console.log(part);
@@ -156,11 +160,13 @@ export class TeacherServiceService {
   }
 
   newQuestion(isExam, part_id, values){
+    values.token = this.Auth.get_token()
     let headers = new Headers();
     headers.append('content-type', 'application/json');
     let options = new RequestOptions({ headers: headers });
     values.isexam = isExam;
     values.part_id = part_id;
+    console.log("Create new question")
     console.log(values);
     const postReq = this.http.post(
       "http://localhost:4444/api/question",
@@ -179,7 +185,7 @@ export class TeacherServiceService {
     headers.append('content-type', 'application/json');
     let options = new RequestOptions({ headers: headers });
     const postReq = this.http.delete(
-      "http://localhost:4444/api/question?id="+id,
+      "http://localhost:4444/api/question?id=" + id + "&token=" + this.Auth.get_token().replace('.', '%2E'),
       options
     );
     postReq.subscribe( (res3)=>{ } );
@@ -190,7 +196,7 @@ export class TeacherServiceService {
     headers.append('content-type', 'application/json');
     let options = new RequestOptions({ headers: headers });
     const postReq = this.http.delete(
-      "http://localhost:4444/api/part?id="+id,
+      "http://localhost:4444/api/part?id=" + id + "&token=" + this.Auth.get_token().replace('.', '%2E'),
       options
     );
     postReq.subscribe( (res3)=>{});
@@ -201,7 +207,7 @@ export class TeacherServiceService {
     headers.append('content-type', 'application/json');
     let options = new RequestOptions({ headers: headers });
     const postReq = this.http.delete(
-      "http://localhost:4444/api/section?id="+id,
+      "http://localhost:4444/api/section?id=" + id + "&token=" + this.Auth.get_token().replace('.', '%2E'),
       options
     );
     postReq.subscribe( (res3)=>{});
