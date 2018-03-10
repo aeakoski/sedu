@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { TeacherServiceService } from './teacher-service.service';
+import { StudentServiceService } from './student-service.service';
 import { AuthService } from './auth.service';
 import { TeacherGuard, StudentGuard } from './guard.guard';
 
@@ -34,6 +35,7 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   providers: [
     TeacherServiceService,
+    StudentServiceService,
     AuthService,
     TeacherGuard,
     StudentGuard

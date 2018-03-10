@@ -12,7 +12,6 @@ import {DomSanitizer} from "@angular/platform-browser";
   selector: 'app-teacher-dash',
   templateUrl: './teacher-dash.component.html',
   styleUrls: ['./teacher-dash.component.css'],
-  providers: [TeacherServiceService]
 })
 
 export class TeacherDashComponent implements OnInit {

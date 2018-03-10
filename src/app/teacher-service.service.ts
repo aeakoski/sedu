@@ -8,8 +8,6 @@ import { section } from './section'
 import { part } from './part'
 import { question } from './question'
 
-import { SECTIONS } from './mock-sections'
-
 @Injectable()
 export class TeacherServiceService {
   private website_api = "http://localhost:4444/api/";

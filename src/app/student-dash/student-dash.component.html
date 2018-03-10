@@ -1,3 +1,20 @@
-<p>
-  student-dash works!
-</p>
+<div class="track">
+  <div *ngFor="let section of Student.section" class="row section-overview-item">
+    <div class="col-md-4">
+        <h3>{{section.name}}</h3>
+    </div>
+    <div class="col-md-4">
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="section-enter">
+        <button type="button" class="btn btn-info">Go!</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <button type="button" class="btn btn-default">Skriv Tenta</button>
+  </div>
+</div>
