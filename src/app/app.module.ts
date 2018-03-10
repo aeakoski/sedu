@@ -14,23 +14,9 @@ import { LoginComponent } from './login/login.component';
 import { TeacherDashComponent } from './teacher-dash/teacher-dash.component';
 import { StudentDashComponent } from './student-dash/student-dash.component';
 
-//import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 
 console.log('Imports done')
-const routes: Routes = [
-  { path: '', component: HomeComponent},
-  { path: 'login', component: LoginComponent},
-  { path: 'teacher',
-    component: TeacherDashComponent,
-    canActivate: [TeacherGuard]
-  },
-  { path: 'student',
-    component: StudentDashComponent,
-    canActivate: [StudentGuard]
-  }
-
-];
-console.log("Routes done")
 
 @NgModule({
   declarations: [
@@ -45,7 +31,7 @@ console.log("Routes done")
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(routes)
+    AppRoutingModule
 
   ],
   providers: [

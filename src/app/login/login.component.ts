@@ -11,6 +11,11 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
     constructor(private Auth:AuthService, private RR:Router) {
       console.log("LoginComponent created")
+
+      // If i am logged in, redirect me to that page
+      if(this.Auth.get_isLoggedIn()){
+        (this.Auth.get_isTeacher()) ? RR.navigate(['teacher']) : RR.navigate(['student'])
+      }
     }
 
   signIn(name, pass){
