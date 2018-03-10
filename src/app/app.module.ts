@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
+import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 import { TeacherServiceService } from './teacher-service.service';
 import { StudentServiceService } from './student-service.service';
@@ -38,8 +39,9 @@ import { AppRoutingModule } from './app-routing.module';
     StudentServiceService,
     AuthService,
     TeacherGuard,
-    StudentGuard
-    ],
+    StudentGuard,
+    Cookie
+  ],
   bootstrap: [AppComponent]
 })
 

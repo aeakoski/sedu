@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { RequestOptions, Request, RequestMethod } from '@angular/http';
+import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 @Injectable()
 export class AuthService {
 
-  constructor(private http:Http) {
+  constructor(private http:Http, private Cookie: Cookie) {
     console.log("Auth service initialized!")
+    this.signInFromCookie()
   }
 
   private username:string;
@@ -22,6 +24,18 @@ export class AuthService {
 
   ping(){
     console.log("Ping");
+  }
+
+  signInFromCookie(){
+    let token = Cookie.get('token');
+    if (token){
+      this.isLoggedIn = true;
+      this.username = Cookie.get('username');
+      this.first_name = Cookie.get('first_name');
+      this.last_name = Cookie.get('last_name');
+      this.token = token;
+      this.isTeacher = Cookie.get('isTeacher');
+    }
   }
 
   signIn(username, password){
@@ -50,6 +64,13 @@ export class AuthService {
             this.last_name = res3.last_name;
             this.token = res3.token;
             this.isTeacher = res3.isTeacher;
+
+            Cookie.set('username', res3.username, 1 /*days from now*/);
+            Cookie.set('first_name', res3.first_name, 1 /*days from now*/);
+            Cookie.set('last_name', res3.last_name, 1 /*days from now*/);
+            Cookie.set('isTeacher', res3.isTeacher, 1 /*days from now*/);
+            Cookie.set('token', res3.token, 1 /*days from now*/);
+
             if(res3.isTeacher){
               resolve('teacher')
             }else{
