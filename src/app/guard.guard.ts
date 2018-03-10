@@ -29,11 +29,10 @@ export class TeacherGuard implements CanActivate {
     console.log("get teacher: " + this.Auth.get_isTeacher())
 
     if(this.Auth.get_isLoggedIn() && this.Auth.get_isTeacher()){
-      console.log("YAAZ")
       return true;
     }else{
       console.log("NOOOOO")
-      //this.router.navigate(['/login']);
+      this.router.navigate(['/login']);
       return false;
     }
 

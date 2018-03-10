@@ -1,5 +1,6 @@
 'use strict'
 const { Client } = require('pg')
+const jwt = require('jsonwebtoken')
 
 const client = new Client({
   user: 'sedu',
@@ -18,27 +19,27 @@ exports.login = function (req, res) {
     // console.log(err, res)
     if (err) {
       res.send(501)
-    } else {
-      console.log(result.rows)
-      if (result.rows.length === 1) {
-        let r = {
-          token: 'abc',
-          error: false,
-          first_name: 'Förnamn',
-          last_name: 'Efternamn'
-        }
-        if (result.rows[0].isteacher) {
-          r.isTeacher = true
-          // TODO Generate token and add it to a active sessions map
-        } else {
-          r.isTeacher = false
-        }
-        res.json(r)
-          // res.send(result.rows[0]);
-      } else {
-        res.send(401)
-      }
+      return
     }
+    if (result.rows.length !== 1) {
+      res.send(401)
+      return
+    }
+    console.log(result.rows[0])
+    let token = jwt.sign(
+      {username: result.rows[0].username},
+      'supersecret',
+      {expiresIn: '4h'}
+    )
+    console.log(token)
+
+    let r = {
+      token: token,
+      error: false,
+      first_name: 'Förnamn',
+      last_name: 'Efternamn',
+      isTeacher: result.rows[0].isteacher
+    }
+    res.json(r)
   })
-  // res.send(200);
 }

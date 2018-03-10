@@ -16,8 +16,9 @@ export class AuthService {
   private isLoggedIn:boolean;
   private token:string;
 
-  get_isLoggedIn(){ return this.isLoggedIn; }
-  get_isTeacher(){ return this.isTeacher; }
+  get_isLoggedIn(){ return this.isLoggedIn }
+  get_isTeacher(){ return this.isTeacher }
+  get_token(){ return this.token }
 
   ping(){
     console.log("Ping");

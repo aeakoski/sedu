@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import {RequestOptions, Request, RequestMethod} from '@angular/http';
 
+import {AuthService } from './auth.service'
+
 import { section } from './section'
 import { part } from './part'
 import { question } from './question'
@@ -14,12 +16,12 @@ export class TeacherServiceService {
   public section: any;
   public parts: any;
 
-  constructor(private http: Http) { }
+  constructor(private http: Http, private Auth: AuthService) { }
 
   /* ---------------- Getters -----------------*/
 
   getSections(){
-    const req = this.http.get(this.website_api + "section");
+    const req = this.http.get(this.website_api + "section" + "?token=" + this.Auth.get_token().replace('.', '%2E'));
     req.subscribe(
       (res)=>{
         console.log(res.json());
@@ -30,7 +32,7 @@ export class TeacherServiceService {
 
   getParts(sectionid){
     console.log("getting parts")
-    const req = this.http.get(this.website_api + "part?sectionid=" + sectionid);
+    const req = this.http.get(this.website_api + "part?sectionid=" + sectionid + "&token=" + this.Auth.get_token().replace('.', '%2E'));
     req.subscribe(
       (res)=>{
         console.log(res.json());
@@ -39,7 +41,7 @@ export class TeacherServiceService {
         for(let i = 0; i<this.parts.length; i++){
             this.parts[i].question = [];
             this.parts[i].exam = [];
-            this.http.get(this.website_api + "question?isexam=" + 0 + "&id="+ this.parts[i].part_id)
+            this.http.get(this.website_api + "question?isexam=" + 0 + "&id="+ this.parts[i].part_id + "&token=" + this.Auth.get_token().replace('.', '%2E'))
             .subscribe(
               (res)=>{
                 console.log(res.json().length)
@@ -60,7 +62,7 @@ export class TeacherServiceService {
   }
 
   getQuestions(isExam, id){
-    const req = this.http.get(this.website_api + "question?isexam=" + isExam + "&id="+ id);
+    const req = this.http.get(this.website_api + "question?isexam=" + isExam + "&id="+ id + "&token=" + this.Auth.get_token().replace('.', '%2E'));
     req.subscribe(
       (res)=>{
         //console.log(res.json());
