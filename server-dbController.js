@@ -1,6 +1,7 @@
 'use strict'
 const { Client } = require('pg')
 const jwt = require('jsonwebtoken')
+const secure = require('./server-secure')
 
 const client = new Client({
   user: 'sedu',
@@ -17,7 +18,7 @@ client.connect()
 exports.section = function (req, response) {
   let decoded
   try {
-    decoded = jwt.verify(req.query.token, 'supersecret')
+    decoded = jwt.verify(req.query.token, secure.secret)
   } catch (e) {}
   if (!decoded) {
     response.send(401)
@@ -33,7 +34,6 @@ exports.section = function (req, response) {
                 GROUP BY section_id
                 ) AS t
                 ON s.section_id = t.section_id;`, (err, res) => {
-    // console.log(err, res)
     response.send(res.rows)
   })
 }
@@ -41,7 +41,7 @@ exports.section = function (req, response) {
 exports.part = function (req, response) {
   let decoded
   try {
-    decoded = jwt.verify(req.query.token, 'supersecret')
+    decoded = jwt.verify(req.query.token, secure.secret)
   } catch (e) {}
   if (!decoded) {
     response.send(401)
@@ -55,7 +55,7 @@ exports.part = function (req, response) {
 exports.question = function (req, response) {
   let decoded
   try {
-    decoded = jwt.verify(req.query.token, 'supersecret')
+    decoded = jwt.verify(req.query.token, secure.secret)
   } catch (e) {}
   if (!decoded) {
     response.send(401)

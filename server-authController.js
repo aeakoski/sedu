@@ -1,6 +1,7 @@
 'use strict'
 const { Client } = require('pg')
 const jwt = require('jsonwebtoken')
+const secure = require('./server-secure')
 
 const client = new Client({
   user: 'sedu',
@@ -16,7 +17,6 @@ exports.login = function (req, res) {
   console.log('Login-atempt')
   console.log(req.body)
   client.query("SELECT * FROM users WHERE username = '" + req.body.username + "' AND password = '" + req.body.password + "';", (err, result) => {
-    // console.log(err, res)
     if (err) {
       res.send(501)
       return
@@ -28,7 +28,7 @@ exports.login = function (req, res) {
     console.log(result.rows[0])
     let token = jwt.sign(
       {username: result.rows[0].username},
-      'supersecret',
+      secure.secret,
       {expiresIn: '4h'}
     )
     console.log(token)

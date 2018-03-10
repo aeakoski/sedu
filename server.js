@@ -11,8 +11,7 @@ const port = 4444
 const bodyParser = require('body-parser')
 // const compression = require('compression');
 const express = require('express')
-// var mongoose = require('mongoose')
-// var Task = require('./spotifyModel'); //created model loading here
+var routes = require('./server-routes') // importing route
 
 var app = express()
 
@@ -35,7 +34,6 @@ app.use(function (req, res, next) {
   next()
 })
 
-var routes = require('./server-routes') // importing route
 routes(app)
 
 /*
@@ -46,7 +44,7 @@ routes(app)
     });
 */
 
-    // Start server
+// Start server
 app.listen(port, function () {
   console.log('Port: ' + port)
   console.log('Html: ' + html)
