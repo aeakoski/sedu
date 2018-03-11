@@ -120,7 +120,6 @@
         Parameters:
           username
           password
-          sessionid
         */
         // .get(db.login)
         .post(auth.login)

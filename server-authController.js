@@ -2,6 +2,7 @@
 const { Client } = require('pg')
 const jwt = require('jsonwebtoken')
 const secure = require('./server-secure')
+const crypto = require('crypto')
 
 const client = new Client({
   user: 'sedu',
@@ -39,12 +40,20 @@ exports.refreshToken = function (req, res) {
 exports.login = function (req, res) {
   console.log('Login-atempt')
   console.log(req.body)
-  client.query("SELECT * FROM users WHERE username = '" + req.body.username + "' AND password = '" + req.body.password + "';", (err, result) => {
+  client.query("SELECT * FROM users WHERE username = '" + req.body.username + "';",
+  (err, result) => {
     if (err) {
       res.send(501)
       return
     }
     if (result.rows.length !== 1) {
+      res.send(401)
+      return
+    }
+    const passwordHash = crypto.createHmac('sha256', result.rows[0].salt)
+                       .update(req.body.password)
+                       .digest('hex')
+    if (passwordHash !== result.rows[0].password) {
       res.send(401)
       return
     }
