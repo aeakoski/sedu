@@ -13,6 +13,29 @@ const client = new Client({
 
 client.connect()
 
+exports.refreshToken = function (req, res) {
+  try {
+    jwt.verify(req.query.token, secure.secret)
+    res.send(req.query.token)
+  } catch (e) {
+    if (e.name !== 'TokenExpiredError') {
+      res.send(401)
+      return
+    }
+    let oldTokenData = jwt.verify(req.query.token, secure.secret, {ignoreExpiration: true})
+    console.log(oldTokenData)
+    let token = jwt.sign(
+      {
+        username: oldTokenData.username,
+        isTeacher: oldTokenData.isTeacher
+      },
+      secure.secret,
+      {expiresIn: '1h'}
+    )
+    res.send(token)
+  }
+}
+
 exports.login = function (req, res) {
   console.log('Login-atempt')
   console.log(req.body)
@@ -31,7 +54,7 @@ exports.login = function (req, res) {
         isTeacher: result.rows[0].isTeacher
       },
       secure.secret,
-      {expiresIn: '4h'}
+      {expiresIn: '1h'}
     )
     console.log(token)
 

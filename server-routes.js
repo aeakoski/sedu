@@ -125,6 +125,13 @@
         // .get(db.login)
         .post(auth.login)
 
+      app.route('/api/refresh')
+        /*
+        Parameters:
+          token
+        */
+        .get(auth.refreshToken)
+
       app.route('/*')
         .get(function (req, res) {
           console.log('STANDARD')

@@ -6,7 +6,7 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
 @Injectable()
 export class AuthService {
 
-  constructor(private http:Http, private Cookie: Cookie) {
+  constructor(private http:Http, private Cookies: Cookie) {
     console.log("Auth service initialized!")
     this.signInFromCookie()
   }
@@ -26,6 +26,21 @@ export class AuthService {
     console.log("Ping");
   }
 
+  signOut(){
+    Cookie.delete('isTeacher');
+    Cookie.delete('last_name');
+    Cookie.delete('first_name');
+    Cookie.delete('username');
+    Cookie.delete('token');
+
+    this.isLoggedIn = false;
+    this.username = undefined;
+    this.first_name = undefined;
+    this.last_name = undefined;
+    this.token = undefined;
+    this.isTeacher = false;
+  }
+
   signInFromCookie(){
     let token = Cookie.get('token');
     if (token){
@@ -34,7 +49,7 @@ export class AuthService {
       this.first_name = Cookie.get('first_name');
       this.last_name = Cookie.get('last_name');
       this.token = token;
-      this.isTeacher = Cookie.get('isTeacher');
+      this.isTeacher = Cookie.get('isTeacher') === "true";
     }
   }
 
