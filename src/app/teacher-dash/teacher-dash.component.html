@@ -172,7 +172,7 @@
 
   </div>
 
-  <form class="new-form" #new_part_form=ngForm (ngSubmit)="Teacher.createNewPart(new_part_form.value); hasUpdated=true;">
+  <form class="new-form" #new_part_form=ngForm (ngSubmit)="Teacher.createNewPart(new_part_form.value); hasUpdated=true; new_part_form.reset();">
     <input class="header light-blue" type="text" name="name" placeholder="Nytt delmoment" ngModel>
     <textarea type="text" rows="10" name="description" placeholder="Beskrivning" ngModel></textarea>
     <input type="text" name="video" placeholder="Video-url" ngModel>

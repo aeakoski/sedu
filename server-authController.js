@@ -16,7 +16,9 @@ client.connect()
 
 exports.refreshToken = function (req, res) {
   try {
-    jwt.verify(req.query.token, secure.secret)
+    let t = jwt.verify(req.query.token, secure.secret)
+    console.log('Token alright!')
+    console.log(t)
     res.send(req.query.token)
   } catch (e) {
     if (e.name !== 'TokenExpiredError') {
@@ -33,6 +35,8 @@ exports.refreshToken = function (req, res) {
       secure.secret,
       {expiresIn: '1h'}
     )
+    console.log(req.query.token)
+    console.log(token)
     res.send(token)
   }
 }

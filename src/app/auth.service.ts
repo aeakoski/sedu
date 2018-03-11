@@ -26,6 +26,24 @@ export class AuthService {
     console.log("Ping");
   }
 
+  refreshToken(){
+    return new Promise(
+      (resolve, reject) => {
+        const req = this.http.get("http://localhost:4444/api/" + "refresh?token=" + this.token.replace('.', '%2E'));
+        req.subscribe(
+          (res)=>{
+            this.token = (<any>res)._body
+            Cookie.set('token', this.token, 1 /*days from now*/);
+            resolve("success")
+          },
+          (err)=>{
+            reject("fail")
+          }
+        );
+      }
+    )
+  }
+
   signOut(){
     Cookie.delete('isTeacher');
     Cookie.delete('last_name');

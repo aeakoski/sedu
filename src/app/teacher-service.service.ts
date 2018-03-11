@@ -13,17 +13,27 @@ export class TeacherServiceService {
   private website_api = "http://localhost:4444/api/";
   public section: any;
   public parts: any;
+  private firstTime: Boolean = true;
 
   constructor(private http: Http, private Auth: AuthService) { }
 
   /* ---------------- Getters -----------------*/
 
   getSections(){
-    const req = this.http.get(this.website_api + "section" + "?token=" + this.Auth.get_token().replace('.', '%2E'));
+    let req = this.http.get(this.website_api + "section" + "?token=" + this.Auth.get_token().replace('.', '%2E'));
     req.subscribe(
       (res)=>{
-        console.log(res.json());
         this.section = res.json();
+        this.firstTime = true;
+      },
+      (err)=>{
+        if (err.status == 401 && this.firstTime){
+          this.Auth.refreshToken().then(
+            (success) => { this.getSections() },
+            (err) => { console.log(err) }
+          );
+          this.firstTime = false;
+        }
       }
     );
   }
@@ -35,6 +45,7 @@ export class TeacherServiceService {
       (res)=>{
         console.log(res.json());
         this.parts = res.json();
+        this.firstTime = true;
 
         for(let i = 0; i<this.parts.length; i++){
             this.parts[i].question = [];
@@ -55,6 +66,15 @@ export class TeacherServiceService {
             }
           );
         }
+      },
+      (err)=>{
+        if (err.status == 401 && this.firstTime){
+          this.Auth.refreshToken().then(
+            (success) => { this.getParts(sectionid) },
+            (err) => { console.log(err) }
+          );
+          this.firstTime = false;
+        }
       }
     );
   }
@@ -63,8 +83,17 @@ export class TeacherServiceService {
     const req = this.http.get(this.website_api + "question?isexam=" + isExam + "&id="+ id + "&token=" + this.Auth.get_token().replace('.', '%2E'));
     req.subscribe(
       (res)=>{
-        //console.log(res.json());
+        this.firstTime = true;
         return res.json();
+      },
+      (err)=>{
+        if (err.status == 401 && this.firstTime){
+          this.Auth.refreshToken().then(
+            (success) => { this.getQuestions(isExam, id) },
+            (err) => { console.log(err) }
+          );
+          this.firstTime = false;
+        }
       }
     );
   }
@@ -82,7 +111,18 @@ export class TeacherServiceService {
       section,
       options
     );
-    postReq.subscribe( (res3)=>{ } );
+    postReq.subscribe(
+      (res3)=>{ this.firstTime = true; },
+      (err)=>{
+        if (err.status == 401 && this.firstTime){
+          this.Auth.refreshToken().then(
+            (success) => { this.editSection(section) },
+            (err) => { console.log(err) }
+          );
+          this.firstTime = false;
+        }
+      }
+    );
   }
 
   editPart(part){
@@ -102,7 +142,17 @@ export class TeacherServiceService {
       part,
       options
     );
-    postReq.subscribe( (res3)=>{ } );
+    postReq.subscribe(
+      (res3)=>{ this.firstTime = true; },
+      (err)=>{
+        if (err.status == 401 && this.firstTime){
+          this.Auth.refreshToken().then(
+            (success) => { this.editPart(part) },
+            (err) => { console.log(err) }
+          );
+          this.firstTime = false;
+        }
+      } );
   }
 
   editQuestion(isExam, id, values){
@@ -118,7 +168,17 @@ export class TeacherServiceService {
       values,
       options
     );
-    postReq.subscribe( (res3)=>{ } );
+    postReq.subscribe(
+      (res3)=>{ this.firstTime = true; },
+      (err)=>{
+        if (err.status == 401 && this.firstTime){
+          this.Auth.refreshToken().then(
+            (success) => { this.editQuestion(isExam, id, values) },
+            (err) => { console.log(err) }
+          );
+          this.firstTime = false;
+        }
+      } );
   }
 
   /* ---------------- Creates -----------------*/
@@ -133,7 +193,16 @@ export class TeacherServiceService {
       values,
       options
     );
-    postReq.subscribe( (res3)=>{ } );
+    postReq.subscribe( (res3)=>{ this.firstTime = true; },
+    (err)=>{
+      if (err.status == 401 && this.firstTime){
+        this.Auth.refreshToken().then(
+          (success) => { this.createNewSection(values) },
+          (err) => { console.log(err) }
+        );
+        this.firstTime = false;
+      }
+    } );
   }
 
   createNewPart(part){
@@ -154,7 +223,19 @@ export class TeacherServiceService {
       part,
       options
     );
-    postReq.subscribe( (res3)=>{ } );
+    postReq.subscribe( (res3)=>{
+      this.firstTime = true;
+      this.getParts(part.section_id)
+    },
+    (err)=>{
+      if (err.status == 401 && this.firstTime){
+        this.Auth.refreshToken().then(
+          (success) => { this.createNewPart(part) },
+          (err) => { console.log(err) }
+        );
+        this.firstTime = false;
+      }
+    } );
   }
 
   newQuestion(isExam, part_id, values){
@@ -171,7 +252,16 @@ export class TeacherServiceService {
       values,
       options
     );
-    postReq.subscribe( (res3)=>{ } );
+    postReq.subscribe( (res3)=>{ this.firstTime = true; },
+    (err)=>{
+      if (err.status == 401 && this.firstTime){
+        this.Auth.refreshToken().then(
+          (success) => { this.newQuestion(isExam, part_id, values) },
+          (err) => { console.log(err) }
+        );
+        this.firstTime = false;
+      }
+    } );
   }
 
 
@@ -186,7 +276,16 @@ export class TeacherServiceService {
       "http://localhost:4444/api/question?id=" + id + "&token=" + this.Auth.get_token().replace('.', '%2E'),
       options
     );
-    postReq.subscribe( (res3)=>{ } );
+    postReq.subscribe( (res3)=>{ this.firstTime = true; },
+    (err)=>{
+      if (err.status == 401 && this.firstTime){
+        this.Auth.refreshToken().then(
+          (success) => { this.removeQuestion(id) },
+          (err) => { console.log(err) }
+        );
+        this.firstTime = false;
+      }
+    } );
   }
 
   removePart(id){
@@ -197,7 +296,16 @@ export class TeacherServiceService {
       "http://localhost:4444/api/part?id=" + id + "&token=" + this.Auth.get_token().replace('.', '%2E'),
       options
     );
-    postReq.subscribe( (res3)=>{});
+    postReq.subscribe( (res3)=>{ this.firstTime = true; },
+    (err)=>{
+      if (err.status == 401 && this.firstTime){
+        this.Auth.refreshToken().then(
+          (success) => { this.removePart(id) },
+          (err) => { console.log(err) }
+        );
+        this.firstTime = false;
+      }
+    });
   }
 
   removeSection(id){
@@ -208,7 +316,16 @@ export class TeacherServiceService {
       "http://localhost:4444/api/section?id=" + id + "&token=" + this.Auth.get_token().replace('.', '%2E'),
       options
     );
-    postReq.subscribe( (res3)=>{});
+    postReq.subscribe( (res3)=>{ this.firstTime = true; },
+    (err)=>{
+      if (err.status == 401 && this.firstTime){
+        this.Auth.refreshToken().then(
+          (success) => { this.removeSection(id) },
+          (err) => { console.log(err) }
+        );
+        this.firstTime = false;
+      }
+    });
   }
 
 

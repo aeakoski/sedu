@@ -25,6 +25,7 @@ let decode = function (token) {
 /* ------------ REGULAR GETS ---------------- */
 
 exports.section = function (req, response) {
+  console.log(decode(req.query.token))
   if (!decode(req.query.token)) {
     response.send(401)
     return
