@@ -17,6 +17,7 @@ import { TeacherDashComponent } from './teacher-dash/teacher-dash.component';
 import { StudentDashComponent } from './student-dash/student-dash.component';
 
 import { AppRoutingModule } from './app-routing.module';
+import { StudentPartComponent } from './student-part/student-part.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AppRoutingModule } from './app-routing.module';
     HomeComponent,
     LoginComponent,
     TeacherDashComponent,
-    StudentDashComponent
+    StudentDashComponent,
+    StudentPartComponent
   ],
   imports: [
     BrowserModule,

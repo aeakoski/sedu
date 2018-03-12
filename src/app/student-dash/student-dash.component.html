@@ -10,11 +10,14 @@
     </div>
     <div class="col-md-4">
       <div class="section-enter">
-        <button type="button" class="btn btn-info">Go!</button>
+        <a routerLink="part/{{section.section_id}}"><button type="button" class="btn btn-info">Go!</button></a>
       </div>
     </div>
   </div>
   <div class="col-md-12">
     <button type="button" class="btn btn-default">Skriv Tenta</button>
   </div>
+</div>
+<div class="row">
+  <router-outlet></router-outlet>
 </div>

@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component'
 import { TeacherDashComponent } from './teacher-dash/teacher-dash.component';
 import { StudentDashComponent } from './student-dash/student-dash.component';
 import { TeacherGuard, StudentGuard } from './guard.guard'
+import { StudentPartComponent } from './student-part/student-part.component'
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -16,7 +17,10 @@ const routes: Routes = [
   },
   { path: 'student',
     component: StudentDashComponent,
-    canActivate: [StudentGuard]
+    canActivate: [StudentGuard],
+    children: [
+      {path: 'part/:section_id', component: StudentPartComponent}
+    ]
   }
 
 ];
